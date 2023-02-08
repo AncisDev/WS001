@@ -1,58 +1,20 @@
 <template>
   <div class="inicio">
-      <div id="bank-card1" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.fresh }}</h1>
-        <Tarjeta :digiNivel="nivel.fresh"></Tarjeta>
-      </div>
-      <div id="bank-card2" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.bebe }}</h1>
-        <Tarjeta :digiNivel="nivel.bebe"></Tarjeta>
-      </div>
-      <div id="bank-card3" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.bebe2 }}</h1>
-        <Tarjeta :digiNivel="nivel.bebe2"></Tarjeta>
-      </div>
-      <div id="bank-card1" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.infantil }}</h1>
-        <Tarjeta :digiNivel="nivel.infantil"></Tarjeta>
-      </div>
-      <div id="bank-card2" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.adulto }}</h1>
-        <Tarjeta :digiNivel="nivel.adulto"></Tarjeta>
-      </div>
-      <div id="bank-card3" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.definitivo }}</h1>
-        <Tarjeta :digiNivel="nivel.definitivo"></Tarjeta>
-      </div>
-      <div id="bank-card1" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.armor }}</h1>
-        <Tarjeta :digiNivel="nivel.armor"></Tarjeta>
-      </div>
+    <h1>This is an Inicio page</h1>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Tarjeta from "@/components/Tarjeta.vue";
 
 export default {
   name: 'Inicio',
   components: {
-    Tarjeta
   },
   props:{
   },
   data:()=>({
-    nivel: {
-                fresh:"Fresh",
-                bebe:"In Training",
-                bebe2:"Training",
-                infantil: "Rookie",
-                adulto: "Champion",
-                perfecto:"Ultimate",
-                definitivo:"Mega",
-                armor:"Armor"
-            },
+    
   })
 }
 </script>

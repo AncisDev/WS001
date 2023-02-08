@@ -5,10 +5,33 @@
         </div>
         <nav class="w-md-50 d-flex justify-content-evenly align-items-center">
             <div
-                 v-for="r in rutas"
-                 v-on:click="insertarRuta(r.ruta)" 
+                 v-for="r in rutas" 
                  class="btn"
-                 >{{r.nombre}}</div>
+                 >
+                    
+                    <button v-if="r.subRuta "
+                    class="btn btn-outline-success dropdown-toggle" 
+                    type="button" 
+                    data-bs-toggle="dropdown" 
+                    aria-expanded="false">
+                        {{ r.nombre }}
+                    </button>
+                    <button v-else v-on:click="insertarRuta(r.ruta)"
+                    class="btn btn-outline-success"
+                    >
+                        {{r.nombre}}
+                    </button>
+                    <ul class="dropdown-menu bg-success">
+                        <li v-for="sr in r.subRuta" >
+                            <a class="dropdown-item" 
+                            v-on:click="insertarRuta(sr.ruta)" 
+                            >
+                                {{ sr.nombre }}
+                            </a>
+                        </li>
+                    </ul>
+                    
+                </div>
         </nav>
     </div>
 </template>
@@ -24,7 +47,7 @@ export default{
         rutas:[
             {nombre: 'Inicio', ruta:'/'},
             {nombre: 'Nosotros', ruta:'/nosotros'},
-            {nombre: 'Wiki', ruta:'/productos', 
+            {nombre: 'Wiki', ruta:'/wiki', 
                 subRuta:[
                     {nombre:'Digimon', ruta:'/digimon'},
                     {nombre:'Pokemon', ruta:'/pokemon'},
@@ -37,10 +60,9 @@ export default{
         insertarRuta(ruta){
         this.$router.push(ruta);
         },
-
-        addClass(clase){
-        this.$router.push(clase);
-        }
+    },
+    mounted(){
+        
     }
 }
 </script>

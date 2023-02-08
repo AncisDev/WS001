@@ -12,9 +12,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Nosotros.vue')
   },
   {
-    path: '/productos',
-    name: 'productos',
+    path: '/wiki',
+    name: 'Wiki',
     component: () => import(/* webpackChunkName: "about" */ '../views/Productos.vue')
+  },
+  {
+    path: '/digimon',
+    name: 'Digimon',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Digimon.vue')
   },
   {
     path: '/contacto',
@@ -26,6 +31,15 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next)=>{
+  let documentTitle = `${ process.env.VUE_APP_TITTLE } | ${to.name}`
+  if(to.name){
+    documentTitle += ` | ${to.name}`
+  } 
+  document.title = documentTitle
+  next()
 })
 
 export default router
