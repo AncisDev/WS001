@@ -1,21 +1,19 @@
 <template>
-    <div  class="bg-dark text-light border-bottom border-success d-flex justify-content-between sticky-top border-bottom m-0 p-0">
-        <div class="px-4 text-start d-block fs-1">
+    <div  class="w-100 bg-dark text-light border-bottom border-success d-flex justify-content-between sticky-top border-bottom m-0 p-0">
+        <div class="px-4 text-start fs-1">
             Empresa
         </div>
-        <nav class="w-50 d-flex justify-content-evenly align-items-center">
+        <nav class="w-md-50 d-flex justify-content-evenly align-items-center">
             <div
-                 v-for="item in rutas"
-                 v-on:click="insertarRuta(item.ruta)" 
+                 v-for="r in rutas"
+                 v-on:click="insertarRuta(r.ruta)" 
                  class="btn"
-                 >{{item.nombre}}</div>
+                 >{{r.nombre}}</div>
         </nav>
     </div>
 </template>
 
 <script>
-import HomeView from '@/views/Inicio.vue';
-
 
 export default{
     name: 'Header',
@@ -26,7 +24,11 @@ export default{
         rutas:[
             {nombre: 'Inicio', ruta:'/'},
             {nombre: 'Nosotros', ruta:'/nosotros'},
-            {nombre: 'Productos', ruta:'/productos'},
+            {nombre: 'Wiki', ruta:'/productos', 
+                subRuta:[
+                    {nombre:'Digimon', ruta:'/digimon'},
+                    {nombre:'Pokemon', ruta:'/pokemon'},
+            ]},
             {nombre: 'Contacto', ruta:'/contacto'}
         ]
     }),
@@ -34,6 +36,10 @@ export default{
     {
         insertarRuta(ruta){
         this.$router.push(ruta);
+        },
+
+        addClass(clase){
+        this.$router.push(clase);
         }
     }
 }
