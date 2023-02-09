@@ -1,16 +1,23 @@
 <template>
-    <div class="pokeCards d-inline-flex justify-content-evenly mb-5">
+    <div class="pokeCards">
         <div 
-        v-if="poke.level == digiNivel"
-        class="card bg-info-subtle m-2"
-        style="width: 13rem;"
+        class="card bg-dark text-light mx-auto my-4 py-2"
+        style="width: 12rem;width:300px;max-width: 75%;"
         >
-            <img :src=poke.img class="card-img-top" alt="">
+            <div style="border-radius:100%;width:200px;height:200px;"
+            class="mx-auto border bg-light"
+            >
+               <img :src=cardImg alt=""
+                class="card-img-top w-100 h-100" 
+                style=""
+                > 
+            </div>
+            
             <div class="card-body">
-                <span class="badge rounded-pill text-bg-warning fw-bold">{{ i+1 }}</span>
-                <h5 class="card-title fw-bolder">{{ digi.name }}</h5>
-                <p class="card-text ">Etapa: {{ digi.level }}</p>
-                <a :href="''+poke.name" target="_blank" class="btn btn-outline-dark d-block">Wiki</a>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger py-3 fs-6">{{ badgeMsg }}</span>
+                <h5 class="card-title fw-bolder text-uppercase">{{ cardTitle }}</h5>
+                <p class="card-text ">{{ cardBody }}</p>
+                <router-link :to="''" class="btn btn-outline-danger d-block">Wiki</router-link>
             </div>
         </div> 
     </div>
@@ -20,16 +27,17 @@
 export default{
     name: 'PokeCards',
     props:{ 
+        cardTitle: String,
+        cardBody: String,
+        cardImg: String,
+        pokeInfo: String,
+        badgeMsg: String,
     },
     data:()=>({
-            pokemons:[],
+        
     }),
     mounted(){
-        fetch("")
-        .then((res)=>res.json())
-        .then((res)=>this.pokemons=res)
-
-        console.log('')
+    
     }
 }
 </script>

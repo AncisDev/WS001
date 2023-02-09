@@ -18,7 +18,12 @@
             ></button>
             <ul class="dropdown-menu text-light bg-dark mt-1">
                 <li v-for="r in rutas">
-                    <a class="dropdown-item" href="#">{{ r.nombre }}</a>
+                    <a class="dropdown-item" 
+                    v-on:click="insertarRuta(r.ruta)" 
+                    href="#"
+                    >
+                        {{ r.nombre }}
+                    </a>
                     <hr class="dropdown-divider m-0 p-0"/>
                 </li>
             </ul>
@@ -45,7 +50,7 @@
                 <ul class="dropdown-menu bg-success">
                     <li v-for="sr in r.subRuta" >
                         <a class="btn btn-sm border-0 dropdown-item" 
-                        v-on:click="insertarSubRuta(sr.nombre,sr.nombre)" 
+                        v-on:click="insertarSubRuta(sr.nombre,r.nombre)" 
                         >
                             {{ sr.nombre }}
                         </a>

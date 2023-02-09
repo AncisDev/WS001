@@ -1,5 +1,5 @@
 <template>
-    <div class="digiCards d-inline-flex justify-content-evenly mb-5" 
+    <div class="digiCards d-inline-flex justify-content-evenly my-4" 
     v-for="(digi,i) in digimons" :key="i"
     >
         <div 

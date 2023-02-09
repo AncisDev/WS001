@@ -17,17 +17,17 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Productos.vue')
   },
   {
-    path: '/wiki/',
+    path: '/wiki',
     name: 'Wiki',
     component: () => import(/* webpackChunkName: "about" */ '../views/Wiki.vue')
   },
   {
-    path: '/wiki/:id',
+    path: '/:id/digimon',
     name: 'Digimon',
     component: () => import(/* webpackChunkName: "about" */ '../views/Digimon.vue')
   },
   {
-    path: '/wiki/:id',
+    path: '/:id/pokemon',
     name: 'Pokemon',
     params: {
       title: 'Digi Wiki'
