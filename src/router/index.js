@@ -3,27 +3,40 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
-    name: 'inicio',
+    name: 'Inicio',
     component: () => import(/* webpackChunkName: "about" */ '../views/Inicio.vue')
   },
   {
     path: '/nosotros',
-    name: 'nosotros',
+    name: 'Nosotros',
     component: () => import(/* webpackChunkName: "about" */ '../views/Nosotros.vue')
   },
   {
-    path: '/wiki',
-    name: 'Wiki',
+    path: '/productos',
+    name: 'Productos',
     component: () => import(/* webpackChunkName: "about" */ '../views/Productos.vue')
   },
   {
-    path: '/digimon',
+    path: '/wiki/',
+    name: 'Wiki',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Wiki.vue')
+  },
+  {
+    path: '/wiki/:id',
     name: 'Digimon',
     component: () => import(/* webpackChunkName: "about" */ '../views/Digimon.vue')
   },
   {
+    path: '/wiki/:id',
+    name: 'Pokemon',
+    params: {
+      title: 'Digi Wiki'
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/Pokemon.vue')
+  },
+  {
     path: '/contacto',
-    name: 'contacto',
+    name: 'Contacto',
     component: () => import(/* webpackChunkName: "about" */ '../views/Contacto.vue')
   }
 ]
@@ -34,9 +47,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next)=>{
-  let documentTitle = `${ process.env.VUE_APP_TITTLE } | ${to.name}`
-  if(to.name){
-    documentTitle += ` | ${to.name}`
+  let documentTitle = `${ process.env.VUE_APP_TITTLE } | ${ to.name }`
+  if(to.params.title){
+    console.log(to)
+    console.log(to.params)
+    documentTitle += ` | ${ to.params.titulo }`
   } 
   document.title = documentTitle
   next()

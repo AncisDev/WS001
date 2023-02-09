@@ -13,8 +13,10 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
+    "firebase": "^9.17.1",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
+    "vuefire": "^3.0.1",
     "vuex": "^4.0.0"
   },
   "devDependencies": {

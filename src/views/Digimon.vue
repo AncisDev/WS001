@@ -1,59 +1,74 @@
 <template>
   <div class="digimon">
-      <div id="bank-card1" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.fresh }}</h1>
-        <Tarjeta :digiNivel="nivel.fresh"></Tarjeta>
-      </div>
-      <div id="bank-card2" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.bebe }}</h1>
-        <Tarjeta :digiNivel="nivel.bebe"></Tarjeta>
-      </div>
-      <div id="bank-card3" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.bebe2 }}</h1>
-        <Tarjeta :digiNivel="nivel.bebe2"></Tarjeta>
-      </div>
-      <div id="bank-card1" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.infantil }}</h1>
-        <Tarjeta :digiNivel="nivel.infantil"></Tarjeta>
-      </div>
-      <div id="bank-card2" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.adulto }}</h1>
-        <Tarjeta :digiNivel="nivel.adulto"></Tarjeta>
-      </div>
-      <div id="bank-card3" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.definitivo }}</h1>
-        <Tarjeta :digiNivel="nivel.definitivo"></Tarjeta>
-      </div>
-      <div id="bank-card1" class="container-fluid w-100">
-        <h1 class="text-light p-3">{{ nivel.armor }}</h1>
-        <Tarjeta :digiNivel="nivel.armor"></Tarjeta>
-      </div>
+    <div class="container-fluid bg-dark text-light fw-bolder">
+      <p class="h1 m-0 py-4">{{$route.name}}</p>
+    </div>
+
+    <hr class="opacity-100 border-success m-0 p-0">
+    
+    <div id="bank-card1" class="container-fluid p-0 w-100">
+      <span class="text-light py-3 bg-dark d-block fs-3">{{ nivel.fresh }} {{ wdTop }}</span>
+      <DigiCards :digiNivel="nivel.fresh"></DigiCards>
+    </div>
+
+    <div id="bank-card2" class="container-fluid p-0 w-100">
+      <span class="text-light py-3 bg-dark d-block fs-3">{{ nivel.bebe }}</span>
+      <DigiCards :digiNivel="nivel.bebe"></DigiCards>
+    </div>
+
+    <div id="bank-card3" class="container-fluid p-0 w-100">
+      <span class="text-light py-3 bg-dark d-block fs-3">{{ nivel.bebe2 }}</span>
+      <DigiCards :digiNivel="nivel.bebe2"></DigiCards>
+    </div>
+
+    <div id="bank-card1" class="container-fluid p-0 w-100">
+      <span class="text-light py-3 bg-dark d-block fs-3">{{ nivel.infantil }}</span>
+      <DigiCards :digiNivel="nivel.infantil"></DigiCards>
+    </div>
+
+    <div id="bank-card2" class="container-fluid p-0 w-100">
+      <span class="text-light py-3 bg-dark d-block fs-3">{{ nivel.adulto }}</span>
+      <DigiCards :digiNivel="nivel.adulto"></DigiCards>
+    </div>
+
+    <div id="bank-card3" class="container-fluid p-0 w-100">
+      <span class="text-light py-3 bg-dark d-block fs-3">{{ nivel.definitivo }}</span>
+      <DigiCards :digiNivel="nivel.definitivo"></DigiCards>
+    </div>
+
+    <div id="bank-card1" class="container-fluid p-0 w-100">
+      <span class="text-light py-3 bg-dark d-block fs-3">{{ nivel.armor }}</span>
+      <DigiCards :digiNivel="nivel.armor"></DigiCards>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Tarjeta from "@/components/Tarjeta.vue";
+import DigiCards from "@/components/DigiCards.vue";
 
 export default {
   name: 'Digimon',
   components: {
-    Tarjeta
+    DigiCards
   },
   props:{
   },
   data:()=>({
     nivel: {
-                fresh:"Fresh",
-                bebe:"In Training",
-                bebe2:"Training",
-                infantil: "Rookie",
-                adulto: "Champion",
-                perfecto:"Ultimate",
-                definitivo:"Mega",
-                armor:"Armor"
-            },
-  })
+      fresh:"Fresh",
+      bebe:"In Training",
+      bebe2:"Training",
+      infantil: "Rookie",
+      adulto: "Champion",
+      perfecto:"Ultimate",
+      definitivo:"Mega",
+      armor:"Armor"
+    },
+  }),
+  methods:{
+
+  }
 }
 </script>
 

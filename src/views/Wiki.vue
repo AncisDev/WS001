@@ -1,16 +1,16 @@
 <template>
-  <div class="inicio">
-    <h1>This is an Inicio page</h1>
+  <div class="wiki">
+    <h1>This is an Wiki page</h1>
     <div class="container">
       <router-link
       class="btn btn-outline-success d-block" 
-      :to="{name: 'Nosotros', params:{id:''}}"
-      >Nosotros</router-link>
+      :to="{name: 'Digimon', params:{id:'digimon', title: 'Digi Wiki'}}"
+      >Digimon</router-link>
 
       <router-link
       class="btn btn-outline-success d-block" 
-      :to="{name: 'Wiki', params:{id:''}}"
-      >Wiki</router-link>
+      :to="{name: 'Pokemon', params:{id:'pokemon', title: 'Poke Wiki'}}"
+      >Pokemon</router-link>
     </div>
   </div>
 </template>
@@ -19,7 +19,7 @@
 // @ is an alias to /src
 
 export default {
-  name: 'Inicio',
+  name: 'Wiki',
   components: {
   },
   props:{

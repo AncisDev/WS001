@@ -1,20 +1,36 @@
 <template>
   <Header></Header>
-  <router-view/>
+  <router-view />
 </template>
 
 <script>
 // @ is an alias to /src
 import Header from '@/components/Header.vue'
+import { onMounted } from 'vue';
+import { auth } from "./utils/firebase";
 
 export default {
   name: 'App',
+  setup(){
+    onMounted(()=>{
+      auth.onAuthStateChanged((user)=>{
+        if(user) {
+          console.log("usuario logueado")
+        }else{
+          console.log("usuario no logueado")
+        }
+      })
+    })
+  },
   components: {
     Header
   },
   data:()=>({
     
-  })
+  }),
+  methods:{
+    
+  }
 }
 </script>
 
