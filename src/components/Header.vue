@@ -2,9 +2,13 @@
     <div class="w-100 bg-dark text-light border-bottom border-success d-flex justify-content-between align-items-center sticky-top border-bottom m-0 p-0">
         <div class="w-100 w-md-25 px-1 p-0 m-0 text-start fs-1 ">
             <router-link :to="{name: 'Inicio'}"
-            class="btn btn-outline-success btn-lg border-0 rounded-0 w-100 fs-2 text-start d-block"
+            class="btn btn-outline-success btn-lg border-0 rounded-0 w-100 m-0 p-0 fs-2 text-start d-block"
             >
-                Empresa {{ scTop }}
+                <img src="../assets/img/mySites/logo_2.png" 
+                alt="TravelDev Trip" 
+                class="border-0 m-0 p-1"
+                style="max-width: 200px;;"
+                >
             </router-link>
         </div>
 
@@ -16,7 +20,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
             ></button>
-            <ul class="dropdown-menu text-light bg-dark mt-1">
+            <ul class="dropdown-menu text-light bg-dark mt-2">
                 <li v-for="r in rutas">
                     <a class="dropdown-item" 
                     v-on:click="insertarRuta(r.ruta)" 
@@ -30,11 +34,11 @@
         </div>
         
         <nav  
-        class="w-100 mw-md-25 m-0 d-none d-md-flex justify-content-end align-items-center"
+        class="w-100 mw-md-25 m-0 me-3 d-none d-md-flex justify-content-end align-items-center"
         >
             <div v-for="r in rutas">
                 <button v-if="r.subRuta"
-                class="btn btn-sm btn-outline-success dropdown-toggle mx-1 p-1" 
+                class="btn btn-sm btn-outline-success border-0 rounded-pill mx-1 py-2 px-3 dropdown-toggle mx-1 p-1" 
                 type="button" 
                 data-bs-toggle="dropdown" 
                 aria-expanded="false">
@@ -42,7 +46,7 @@
                 </button>
 
                 <button v-else v-on:click="insertarRuta(r.ruta)"
-                class="btn btn-sm btn-outline-success mx-1 p-1"
+                class="btn btn-sm btn-outline-success border-0 rounded-pill mx-1 py-2 px-3"
                 >
                     {{r.nombre}}
                 </button>
@@ -66,7 +70,6 @@
 export default{
     name: 'Header',
     props:{
-        scTop:String,
     },
     data:()=>({
         rutas:[

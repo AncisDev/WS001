@@ -13,7 +13,7 @@
 
     <div class="d-flex overflow-auto h-75">
       <div class="col col-md-2 m-0 p-0 list-group">
-        <button v-on:click="getDex(region.url)" 
+        <button v-on:click="getDex(pokeRegion.url)" 
         v-for="item in pokeLista"
         class="list-group-item list-group-item-action text-uppercase"
         
