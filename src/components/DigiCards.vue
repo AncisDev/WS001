@@ -4,16 +4,19 @@
     >
         <div 
         v-if="digi.level == digiNivel"
-        class="card text-bg-dark m-3"
+        class="card text-bg-dark m-3 overflow-hidden rounded-circle"
         style="width: 12rem;"
         >
-            <img :src=digi.img class="card-img-top" alt="">
-            <div class="card-body">
-                <span class="badge rounded-pill text-bg-warning fw-bold">{{ i+1 }}</span>
+        <div class="card-img-top bg-light p-2">
+            <img :src=digi.img class="w-100 h-100" alt="">
+        </div>  
+                      <span class="badge px-2 d-block text-bg-warning fw-bold">{{ i+1 }}</span>
+
+        <div class="card-body">
                 <h5 class="card-title fw-bolder fs-6">{{ digi.name }}</h5>
                 <p class="card-text " style="font-size: 0.9rem;">Fase: {{ digi.level }}</p>
                 <a :href="'https://digimon.fandom.com/es/wiki/'+digi.name" target="_blank" 
-                class="btn btn-outline-danger border-0 border-bottom border-end rounded-0 border-secondary-subtle text-light d-block"
+                class="btn btn-outline-warning border-0 border-bottom border-end rounded-0 border-secondary-subtle d-block"
                 >Información</a>
             </div>
         </div> 

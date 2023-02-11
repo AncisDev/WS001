@@ -1,6 +1,6 @@
 <template>
     <div class="pokeCards">
-        <div 
+        <div id="card"
         class="card bg-dark text-light mx-auto my-4 py-2"
         style="width: 12rem;width:300px;max-width: 75%;"
         >

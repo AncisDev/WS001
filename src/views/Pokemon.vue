@@ -1,40 +1,48 @@
 <template>
   <div class="pokemon">
     <div class="container-fluid bg-dark text-light fw-bolder">
-      <p class="h1 m-0 py-4">{{$route.name}}</p>
-      <button v-on:click="getRegiones('pokedex')"
-      class="btn btn-sm btn-dark" 
-      >REGIONES</button>
       
-      <button v-on:click="getPokemons(urlApi+'pokemon')"
-      class="btn btn-sm btn-dark" 
-      >POKEMON</button>
-    </div>
+      <div v-if="pokeMons.descriptions" v-show="show" v-for="desc in pokeMons.descriptions"
+      class="bg-dark text-center w-100 m-0 p-0">
+        <div v-if="desc.language.name == 'es'" 
+        class="badge fs-1 text-warning pe-4 py-2"
+        >{{desc.description}}</div>
+      </div>
+      <h1 v-else class="text-warning">{{ $route.name }}</h1>
 
-    <div class="d-flex position-fixed w-100 h-75">
-      <div class="col-4 col-md-3 col-xl-2 m-0 p-0 list-group overflow-auto">
-        <button v-for="item in pokeLista"
-        class="list-group-item list-group-item-action rounded-0 text-uppercase"
+      <div class="py-2">
+        <button v-on:click="getPokedex()"
+        class="btn btn-sm btn-warning mx-1" 
+        >REGIONES</button>
+        
+        <button v-on:click="getPokemons(pokeApi.pokemon), show = false"
+        class="btn btn-sm btn-warning mx-1" 
+        >POKEMON</button>
+      </div>
+    </div>
+    
+    
+
+    <div v-if="pokeDex.results" class="d-flex position-fixed w-100 h-75">
+      <div class="col-4 col-md-3 col-xl-2 rounded-0 border-top m-0 p-0 list-group overflow-auto">
+        <button v-for="item in pokeDex.results"
+        class="list-group-item list-group-item-action rounded-0 border-0 border-bottom text-bg-dark text-uppercase"
         >
-          <div v-on:click="getDex(item.url)"
+          <div v-on:click="getPokemons(item.url)"
+          class="w-100"
+          >
+           {{ item.name }}
+          </div>
+          <!-- <div v-on:click="getPokeInfo(item.url)"
           class="w-100"
           >
             {{ item.name }}
-          </div>
-          <div  v-on:click="getDex(item.url)"
-          class="w-100"
-          >
-            {{ item.name }}
-          </div>
+          </div> -->
         </button>
       </div>
       
       <div class="row m-0 p-0 vh-100 overflow-auto">
-        <div>
-          <!-- <h1>{{pokeDescripcion[2].description}}</h1> -->
-        </div>
-
-        <div v-for="dex in pokeDex.pokemon_entries"
+        <div v-for="dex in pokeMons.pokemon_entries"
         class="col m-0 p-0"
         >
           <PokeCards 
@@ -45,6 +53,13 @@
           ></PokeCards>
         </div>
       </div>
+    </div>
+
+    <div v-else class="m-auto p-0" style="max-width: 1000px;max-height: 300px;">
+      <img src="../assets/img/mySites/anime/pokemon/logo_pokemon.png" 
+      alt=""
+      class="w-100 h-100"
+      >
     </div>
   </div>
 </template>
@@ -61,54 +76,45 @@ export default {
   props:{
   },
   data:()=>({
-    urlApi:"https://pokeapi.co/api/v2/",
-    pokeLista:[],
-    pokeDescripcion:[],
+    show:false,
     pokeApi:[],
-    pokeRegion:[],
     pokeDex:[],
-    pokemons:[],
-    abilidades:[],
-    prevDexCount:[
-      {
-        
-      }
-    ],
+    pokeMons:[],
   }),
   methods:
-    {      
-      getRegiones(){
-        fetch(this.pokeApi.pokedex)
-        .then((res)=>res.json())
-        .then((res)=>this.pokeRegion=res)
-        .then((res)=>this.pokeLista=res.results)
-        // .then((res)=>console.log(res))
-      },
-      getDex(region){
-        fetch(region)
-        .then((res)=>res.json())
-        .then((res)=>this.pokeDex=res)
-        .then((res)=>this.pokeDescripcion=res.descriptions)
-        .then((res)=>console.log(res))
-      },
-      getPokemons(pokemons){
-        fetch(pokemons)
-        .then((res)=>res.json())
-        .then((res)=>this.pokemons=res)
-        .then((res)=>this.pokeLista=res.results)
-        .then((res)=>console.log(res))
-      },
-      getPokeInfo(urlInfo){
-       fetch(urlInfo)
-       .then((res)=>res.json())
-       .then((res)=>this.pokemons=res)
-       .then((res)=>console.log(res))
-     },
+  {      
+    getPokedex(){
+      this.$store.state.load = true;
+      
+      fetch(this.pokeApi.pokedex)
+      .then((res)=>res.json())
+      .then((res)=>this.pokeDex=res)
+      .then((res)=>console.log(res))
+      .then(()=>this.$store.state.load = false)
+    },
+
+    getPokemons(api){
+      this.$store.state.load = true;
+      console.log(api)
+      
+      fetch(api)
+      .then((res)=>res.json())
+      .then((res)=>this.pokeMons=res)
+      .then((res)=>console.log(res))
+      .then(()=>this.$store.state.load = false)
+      .then(()=>this.show = true)
+    },
+
+    
+  },
+  beforeMount(){
+    
   },
   mounted(){
-    fetch(this.urlApi)
+    fetch(this.$store.state.pokeApi)
     .then((res)=>res.json())
     .then((res)=>this.pokeApi=res)
+    .then((res)=>console.log(res))
   }
 }
 </script>
