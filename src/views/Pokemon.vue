@@ -5,10 +5,10 @@
       <div v-if="pokeMons.descriptions" v-show="show" v-for="desc in pokeMons.descriptions"
       class="bg-dark text-center w-100 m-0 p-0">
         <div v-if="desc.language.name == 'es'" 
-        class="badge fs-1 text-warning pe-4 py-2"
+        class="badge fs-2 text-warning text-wrap pe-4 py-2"
         >{{desc.description}}</div>
       </div>
-      <h1 v-else class="text-warning">{{ $route.name }}</h1>
+      <h2 v-else class="text-warning fw-bolder">¡Atrapalos todos!</h2>
 
       <div class="py-2">
         <button v-on:click="getPokedex()"
@@ -55,10 +55,11 @@
       </div>
     </div>
 
-    <div v-else class="m-auto p-0" style="max-width: 1000px;max-height: 300px;">
+    <div v-else class="container position-absolute top-50">
       <img src="../assets/img/mySites/anime/pokemon/logo_pokemon.png" 
       alt=""
-      class="w-100 h-100"
+      class=""
+      style="max-width: 80vw;"
       >
     </div>
   </div>
