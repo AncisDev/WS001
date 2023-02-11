@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <router-view/>
+  <router-view :titulo="tituloWeb"/>
   <footer class="sticky-bottom text-bg-dark position-fixed w-100 py-1 m-0 border-top border-success">
     © 2023
   </footer>
@@ -9,8 +9,8 @@
 <script>
 // @ is an alias to /src
 import Header from '@/components/Header.vue'
-import { onMounted } from 'vue';
-import { auth } from "./utils/firebase.js";
+// import { onMounted } from 'vue';
+// import { auth } from "./utils/firebase.js";
 
 export default {
   name: 'App',
@@ -29,9 +29,12 @@ export default {
     Header
   },
   data:()=>({
-    
+    tituloWeb: process.env.VUE_APP_TITTLE,
   }),
   methods:{
+    
+  },
+  mounted(){
     
   }
 }

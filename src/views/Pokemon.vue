@@ -1,45 +1,43 @@
 <template>
   <div class="pokemon">
     <div class="container-fluid bg-dark text-light fw-bolder">
-      <p class="h1 m-0 p-5">{{$route.name}}</p>
+      <p class="h1 m-0 py-4">{{$route.name}}</p>
       <button v-on:click="getRegiones('pokedex')"
-      class="btn btn-dark" 
-      >Lista Pokedex</button>
+      class="btn btn-sm btn-dark" 
+      >REGIONES</button>
       
-      <button v-on:click="getPokeLista(urlApi+'pokemon')"
-      class="btn btn-dark" 
-      >Lista Pokemon</button>
+      <button v-on:click="getPokemons(urlApi+'pokemon')"
+      class="btn btn-sm btn-dark" 
+      >POKEMON</button>
     </div>
 
-    <div class="d-flex overflow-auto h-75">
-      <div class="col col-md-2 m-0 p-0 list-group">
-        <button v-on:click="getDex(pokeRegion.url)" 
-        v-for="item in pokeLista"
-        class="list-group-item list-group-item-action text-uppercase"
-        
+    <div class="d-flex position-fixed w-100 h-75">
+      <div class="col-4 col-md-3 col-xl-2 m-0 p-0 list-group overflow-auto">
+        <button v-for="item in pokeLista"
+        class="list-group-item list-group-item-action rounded-0 text-uppercase"
         >
-          {{ item.name }}
+          <div v-on:click="getDex(item.url)"
+          class="w-100"
+          >
+            {{ item.name }}
+          </div>
+          <div  v-on:click="getDex(item.url)"
+          class="w-100"
+          >
+            {{ item.name }}
+          </div>
         </button>
       </div>
       
-      <div class="row m-0 p-0">
+      <div class="row m-0 p-0 vh-100 overflow-auto">
+        <div>
+          <!-- <h1>{{pokeDescripcion[2].description}}</h1> -->
+        </div>
+
         <div v-for="dex in pokeDex.pokemon_entries"
         class="col m-0 p-0"
         >
           <PokeCards 
-          class=""
-          :cardTitle="dex.pokemon_species.name"
-          :cardBody="''"
-          :badgeMsg="'N°'+dex.entry_number" 
-          :cardImg="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/'+Number(dex.entry_number)+'.svg'"
-          ></PokeCards>
-        </div>
-
-        <div v-for="dex in pokeDex.pokemon_entries"
-        class="col m-0 p-0 bg-primary"
-        >
-          <PokeCards 
-          class=""
           :cardTitle="dex.pokemon_species.name"
           :cardBody="''"
           :badgeMsg="'N°'+dex.entry_number" 
@@ -65,6 +63,7 @@ export default {
   data:()=>({
     urlApi:"https://pokeapi.co/api/v2/",
     pokeLista:[],
+    pokeDescripcion:[],
     pokeApi:[],
     pokeRegion:[],
     pokeDex:[],
@@ -83,33 +82,33 @@ export default {
         .then((res)=>res.json())
         .then((res)=>this.pokeRegion=res)
         .then((res)=>this.pokeLista=res.results)
+        // .then((res)=>console.log(res))
       },
       getDex(region){
-        console.log(region)
-
         fetch(region)
         .then((res)=>res.json())
         .then((res)=>this.pokeDex=res)
+        .then((res)=>this.pokeDescripcion=res.descriptions)
+        .then((res)=>console.log(res))
       },
-      getPokeLista(apiLista){
-       
-        fetch(apiLista)
+      getPokemons(pokemons){
+        fetch(pokemons)
         .then((res)=>res.json())
         .then((res)=>this.pokemons=res)
         .then((res)=>this.pokeLista=res.results)
-        
+        .then((res)=>console.log(res))
       },
       getPokeInfo(urlInfo){
-       
        fetch(urlInfo)
        .then((res)=>res.json())
        .then((res)=>this.pokemons=res)
+       .then((res)=>console.log(res))
      },
-    },
-    mounted(){
-      fetch(this.urlApi)
-      .then((res)=>res.json())
-      .then((res)=>this.pokeApi=res)
+  },
+  mounted(){
+    fetch(this.urlApi)
+    .then((res)=>res.json())
+    .then((res)=>this.pokeApi=res)
   }
 }
 </script>
