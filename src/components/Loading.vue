@@ -1,7 +1,7 @@
 <template>
     <div id="spinnerContain" class="container-fluid">
         <div class="position-absolute top-50 start-50 translate-middle">
-            <h1 class="text-light mb-5 mx-auto">{{ titulo }}</h1>
+            <h1 class="text-light mb-2 mx-auto">{{ titulo }}</h1>
             <div id="spinner" class="mx-auto">
                 <div id="dotContain" class="rounded-circle bg-secondary-subtle">
                     <div id="dot" class="bg-success rounded-circle position-absolute start-0 top-0"></div>
@@ -42,14 +42,14 @@ export default{
     height: 200px;
     padding: 25px;
 
-    animation: luces 5s ease-in-out infinite;
+    animation: luces 1.5s ease-in-out infinite;
 }
 
 #dotContain{
     width: 100%;
     height: 100%;
     
-    animation: spin-reverse 2s ease-in-out infinite;
+    animation: spin 600ms ease-in-out infinite;
 }
 
 #dot{
@@ -59,19 +59,16 @@ export default{
 
 @keyframes luces {
     0%{
-        border-top-color: red;
+        border-top-color: purple;
         
     }
 
     20%{
-        border-top-color: purple;
+        border-top-color: yellow;
     }
 
     40%{
         border-top-color: blue;
-    }
-
-    50%{
     }
 
     60%{
@@ -79,7 +76,7 @@ export default{
     }
 
     80%{
-        border-top-color: yellow;
+        border-top-color: red;
     }
 
     100%{
@@ -87,7 +84,7 @@ export default{
     }
 }
 
-@keyframes spin-reverse {
+@keyframes spin {
     0%{
         transform: rotate(0deg);
         border-left-color: red;
@@ -98,7 +95,7 @@ export default{
     }
 
     100%{
-        transform: rotate(-360deg);
+        transform: rotate(360deg);
     }
 }
 

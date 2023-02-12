@@ -47,6 +47,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next)=>{
+  // this.store.state.load = true;
   let documentTitle = `${ process.env.VUE_APP_TITTLE } | ${ to.name }`
   if(to.params.title){
     console.log(to)

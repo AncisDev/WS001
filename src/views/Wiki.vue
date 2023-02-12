@@ -26,7 +26,15 @@ export default {
   },
   data:()=>({
     
-  })
+  }),
+  beforeMount(){
+    this.$store.state.load = true; 
+  },
+  mounted(){
+    setTimeout(() => {
+      this.$store.state.load = false; 
+    }, 600);
+  }
 }
 </script>
 

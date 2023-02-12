@@ -86,15 +86,26 @@ export default{
     methods:
     {
         insertarRuta(ruta){
+            this.$store.state.load = true;
             this.$router.push(ruta);
+            setTimeout(() => {
+               this.$store.state.load = false; 
+            }, 1000);
         },
    
         insertarSubRuta(ruta,subRuta){
-            this.$router.push({name: ruta, params:{ id: subRuta }});
+            this.$store.state.load = true;
+            
+            // setTimeout(() => {
+                this.$router.push({name: ruta, params:{ id: subRuta }});
+            // }, 600);
+            // this.$store.state.load = false;
         },
     },
     mounted(){
-
+        setTimeout(() => {
+           this.$store.state.load = false; 
+        }, 600);
     }
 }
 </script>
