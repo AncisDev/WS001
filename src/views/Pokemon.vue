@@ -15,7 +15,7 @@
 
       <!--cambiar por v-for de botones de lista-->
       <div class="pb-2 text-center">
-        <button v-on:click="getRegion(pokeApi.pokedex), showImg = false"
+        <button v-on:click="getRegion(pokeApi.pokedex+'?limit=30'), showImg = false"
         class="btn btn-sm btn-warning rounded-pill p-1 m-1" 
         >REGIONES</button>
         
@@ -25,26 +25,28 @@
       </div>
     </div>
     
-    
-
-    <div  v-if="lista" class="row position-fixed m-0 p-0 w-100 h-100">
-      <div class="col-4 col-md-3 rounded-0 bg-dark m-0 p-0 list-group overflow-auto text-center">
-        <button v-for="item in lista"
-        class="list-group-item list-group-item-action m-0 p-0 rounded-0 border-0 border-secondary border-bottom text-warning bg-dark text-uppercase"
-        >
-          <div v-on:click="getPokeInfo(item.url)"
-          class="w-100 py-1"
+    <div  v-if="lista" class="row m-0 p-0 position-fixed w-100 h-100">
+      <div id="lista" 
+      class="col-4 col-md-3 col-xl-2 rounded-0 bg-dark m-0 px-0 list-group h-100  text-center"
+      >
+        <div class="h-75 overflow-auto">
+          <button v-for="item in lista"
+          class="list-group-item list-group-item-action m-0 px-0 rounded-0 border-0 border-secondary border-bottom text-warning bg-dark text-uppercase"
           >
-           {{ item.name }}
-          </div>
-        </button>
+            <div v-on:click="getPokeInfo(item.url)">
+            {{ item.name }}
+            </div>
+          </button>
+        </div> 
       </div>
       
-      <div v-if="pokeInfo.pokemon_entries" class="col m-0 p-0 overflow-auto">
-        <div v-for="pk in pokeInfo.pokemon_entries"
-        class="col m-0 p-0"
-        >
-          <PokeCards 
+      <div v-if="pokeInfo.pokemon_entries"
+      style="max-height: 80%;" 
+      class="col w-100 m-0 p-0 overflow-auto"
+      >
+        <div class="row m-0 mb-4 p-0 ">
+          <PokeCards v-for="pk in pokeInfo.pokemon_entries"
+          class="col my-4" 
           :cardTitle="pk.pokemon_species.name"
           :cardBody="''"
           :badgeMsg="'N°'+pk.entry_number" 
@@ -54,60 +56,58 @@
         </div>
       </div>
       <div v-else-if="pokeInfo.moves"
-      class="col m-0 p-0 overflow-auto h-100"
+      class="col m-0 mb-5 p-0 pb-5 h-100 bg-light border border-dark overflow-auto"
       style="font-size: .8rem;"
       >
-        <div class="col-12 border border-dark bg-danger m-0 p-0 sticky-top">
-          <PokeCards 
-          class="mx-auto"
+        <div class="row border-bottom border-dark bg-danger m-0 p-0">
+          <PokeCards class="col col-md-6 m-0 p-0"
+          style="transform: scale(0.7);"
           :cardTitle="pokeInfo.name"
           :cardBody="''"
           :badgeMsg="'N°'+pokeInfo.id" 
           :cardImg="pokeInfo.sprites.other.dream_world.front_default"
           ></PokeCards>
+          <div class="col-12 col-md d-flex justify-content-start align-items-center m-0 p-0">
+            <h3 class="mx-2">Tipos</h3>
+            <div v-for="tipo in pokeInfo.types" >
+              <span  class="text-bg-warning rounded-pill mx-2 p-2">{{ tipo.type.name }}</span>
+            </div> 
+          </div>
         </div>
 
-        <div class="col-12 border border-dark bg-light m-0 p-5 w-100 h-75 overflow-auto">
-          <div class="row">
-            <div class="col m-0 p-0">
-              <h3 class="tex-bg-dark">Stats</h3>
-              <hr>
-              <div  v-for="stat in pokeInfo.stats" 
-              class="d-flex justify-content-between text-start"
-              >
-                <p class="w-50">{{ stat.stat.name }}</p>
-                <p class="w-50">: {{ stat.base_stat }}</p>
-              </div>
-            </div>
-
-            <div class="col m-0 p-0 ">
-                <h3>Movimiento</h3>
-                <hr>
-                <div style="max-height: 220px;font-size: 5.rem;"
-                class="border border-dark rounded overflow-y-auto bg-light-subtle p-2">
-                  <p v-for="move in pokeInfo.moves" class="btn d-block text-start rounded-pill">{{ move.move.name }}</p>
-                </div>
+        <div class="row border-top border-dark m-0 mb-5 px-5 py-3">
+          <div class="col-md-6 my-2 px-0">
+            <h3 class="tex-bg-dark">Estadisticas</h3>
+            <hr>
+            <div  v-for="stat in pokeInfo.stats" 
+            class="d-flex justify-content-between text-start"
+            >
+              <p class="w-50">{{ stat.stat.name }}</p>
+              <p class="w-50">: {{ stat.base_stat }}</p>
             </div>
           </div>
 
-          <div class="row m-0 p-0">
-            <div class="col-6">
-              <h3>Tipos</h3>
-              <hr>
-              <div class="d-flex justify-content-evenly align-items-center">
-                <div v-for="tipo in pokeInfo.types" >
-                <span  class="text-bg-warning rounded-pill mx-auto p-2">{{ tipo.type.name }}</span>
-              </div> 
-              </div> 
-            </div>
-            <div class="col ">
-              <h3 class="">Exp. Base</h3>
-              <hr>
-              <div class="d-flex justify-content-evenly align-items-center">
-                <span class="text-bg-warning rounded-pill mx-auto p-2">{{ pokeInfo.base_experience }}XP</span>
-              </div>
+          <div class="col-md-6 my-2 p-0 ">
+            <h3>Movimientos</h3>
+            <hr>
+            <div style="max-height: 220px;max-width: 700px;"
+            class="border border-dark rounded overflow-y-auto bg-light-subtle py-2 px-2">
+              <p v-for="move in pokeInfo.moves" 
+              style="font-size: .7rem;"
+              class="btn btn-sm btn-outline-primary d-block mx-auto text-start text-uppercase rounded-pill"
+              >{{ move.move.name }}</p>
             </div>
           </div>
+
+          <div class="col-12 m-0  p-0">
+            <div class="row my-2 p-0 pb-5 d-flex justify-content-evenly align-items-center">
+              <h5 class="">Exp. Base</h5>
+              <hr >
+              <span class="text-bg-primary text-end rounded-pill mx-auto py-2 px-4">{{ pokeInfo.base_experience }}XP</span>
+            </div>
+          </div>
+
+          <hr class="mb-5">
         </div>
       </div>
     </div>
@@ -157,57 +157,50 @@ export default {
     getRegion(api){
       this.$store.state.load = true;
       console.log('----getRegiones()----')
-      
       fetch(api)
       .then((res)=>res.json())
       .then((res)=>this.pokeDex=res)
       .then(()=>this.lista=this.pokeDex.results)
-      .then((res)=>console.log(res))
-      .then(()=>this.$store.state.load = false)
+      .then(()=>setTimeout(() => {
+        this.$store.state.load = false
+      }, 1000))
     },
 
     getPokemons(api){
       this.$store.state.load = true;
       console.log('----getPokemons()----')
-      
-      setTimeout(() => {
-        fetch(api)
+      fetch(api)
         .then((res)=>res.json())
         .then((res)=>this.pokeMons=res)
         .then(()=>this.lista=this.pokeMons.results)
-        .then((res)=>console.log(res))
-        .then(()=>this.$store.state.load = false)
         .then(()=>this.show = true)
-      }, 1300);
+        .then(()=>setTimeout(() => {
+        this.$store.state.load = false
+      }, 1000))
     },
 
     getPokeInfo(api){
       this.$store.state.load = true;
-      console.log('----getPokeInfo()----')
-      console.log(api)
-      
-      setTimeout(() => {
-        fetch(api)
+      console.log('----getPokeInfo()----') 
+      fetch(api)
         .then((res)=>res.json())
-        .then((res)=>this.pokeInfo=res)
-        // .then((res)=>console.log(res))
-        // .then(()=>this.lista=this.pokeInfo.results)
-        .then((res)=>console.log(res))
-        .then(()=>this.$store.state.load = false)
-      }, 1300);
+        .then((res)=>this.pokeInfo=res)     
+        .then(()=>setTimeout(() => {
+        this.$store.state.load = false
+      }, 1000))
     }
   },
   beforeMount(){
     this.$store.state.load = true; 
   },
   mounted(){
-    setTimeout(() => {
-      fetch(this.$store.state.pokeApi)
+    fetch(this.$store.state.pokeApi)
       .then((res)=>res.json())
       .then((res)=>this.pokeApi=res)
       .then((res)=>console.log(res))
-      .then(()=>this.$store.state.load = false); 
-    }, 600);
+      .then(()=>setTimeout(() => {
+        this.$store.state.load = false
+      }, 1000))
   }
 }
 </script>

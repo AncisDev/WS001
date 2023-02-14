@@ -5,7 +5,7 @@
   <div>
     <Header></Header>
     <router-view :titulo="tituloWeb"/>
-    <footer class="sticky-bottom text-bg-dark text-center position-fixed w-100 py-1 m-0 border-top border-success">
+    <footer class="position-fixed bottom-0 text-bg-dark text-center w-100 py-1 m-0">
       © 2023
     </footer>
   </div>

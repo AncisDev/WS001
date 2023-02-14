@@ -87,17 +87,16 @@ export default {
   methods:{
     insertarRuta(ruta,idx){
       this.$store.state.load = true;
-      
-      // setTimeout(() => {
-        this.$router.push({name:ruta, params:{ id: idx}});       
-      // }, 600);
-      // this.$store.state.load = false;
+      this.$router.push({name:ruta, params:{ id: idx}});
+      setTimeout(() => {
+       this.$store.state.load = false;        
+      }, 600);
     },
   },
-  mounted(){
-    setTimeout(() => {
-      this.$store.state.load = false
-    }, 600);
+  async mounted(){
+    await setTimeout(() => {
+      this.loadOff()
+    }, 300);
   }
 }
 </script>

@@ -1,15 +1,15 @@
 <template>
     <div class="pokeCards">
         <div id="pCard"
-        class="card bg-danger border border-dark text-light mx-auto my-4 py-2"
+        class="card bg-danger border border-dark text-light mx-auto p-3"
         style="width: 12rem;width:300px;max-width: 75%;"
         >
-            <div style="border-radius:100%;width:200px;height:200px;"
+            <div style="border-radius:100%;max-width: 100%;max-height: 100%;"
             class="mx-auto border border-dark bg-light"
             >
                <img :src=cardImg alt=""
                 class="card-img-top w-100 h-100" 
-                style=""
+                style="transform: scale(1.1);"
                 > 
             </div>
             
