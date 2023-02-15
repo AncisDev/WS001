@@ -27,12 +27,15 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Digimon.vue')
   },
   {
-    path: '/:id/pokemon',
-    name: 'Pokemon',
-    params: {
-      title: 'Digi Wiki'
-    },
+    path: '/:id/pokedex',
+    name: 'Pokedex',
     component: () => import(/* webpackChunkName: "about" */ '../views/Pokemon.vue')
+  },
+  {
+    // vista por crear e implementar
+    path: '/chat',
+    name: 'Chat',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Chat.vue')
   },
   {
     path: '/contacto',

@@ -15,11 +15,12 @@
 
       <!--cambiar por v-for de botones de lista-->
       <div class="pb-2 text-center">
-        <button v-on:click="getRegion(pokeApi.pokedex+'?limit=30'), showImg = false"
+        <button v-on:click="getLista(pokeApi.pokedex+'?limit=10'), showImg = false"
         class="btn btn-sm btn-warning rounded-pill p-1 m-1" 
         >REGIONES</button>
         
-        <button v-on:click="getPokemons(pokeApi.pokemon), showImg = false"
+        <button v-on:click="getLista(pokeApi.pokemon), showImg = false"
+        :class="{}"
         class="btn btn-sm btn-warning rounded-pill p-1 m-1" 
         >POKEMON</button>
       </div>
@@ -27,17 +28,36 @@
     
     <div  v-if="lista" class="row m-0 p-0 position-fixed w-100 h-100">
       <div id="lista" 
-      class="col-4 col-md-3 col-xl-2 rounded-0 bg-dark m-0 px-0 list-group h-100  text-center"
+      class="col-4 col-md-3 col-xl-2 bg-dark rounded-0 m-0 px-0 h-100 text-center"
       >
-        <div class="h-75 overflow-auto">
-          <button v-for="item in lista"
-          class="list-group-item list-group-item-action m-0 px-0 rounded-0 border-0 border-secondary border-bottom text-warning bg-dark text-uppercase"
+        <div v-if="urlApi = this.$store.state.pokeApi+'pokedex'"
+        class="w-100 py-1 px-3 fixed-bottom border-bottom border-1 border-secondary position-relative d-flex justify-content-between align-items-center py-3"
+        >
+          <button v-on:click="getLista(prev)"
+          class="btn btn-sm btn-outline-warning text-primary border-0 rounded-circle"
           >
-            <div v-on:click="getPokeInfo(item.url)">
-            {{ item.name }}
-            </div>
+            {{'<<'}}
           </button>
-        </div> 
+          
+          <button v-on:click="getLista(next)"
+          class="btn btn-sm btn-outline-warning text-primary border-0 rounded-circle"
+          >
+            {{'>>'}}
+          </button>
+        </div>
+
+        <div style="max-height: 70%;" 
+        class="overflow-auto h-100 pb-5 pb-md-0"
+        >
+          <div v-for="item in lista" v-on:click="getPokeInfo(item.url)"
+          class="m-0 p-0 w-100 text-uppercase"
+          >
+            <p id="btnLista" class="btn btn-sm btn-outline-danger d-block border-0 m-0 px-0">
+              {{ item.name }}
+            </p>
+          </div>
+          <br>
+        </div>
       </div>
       
       <div v-if="pokeInfo.pokemon_entries"
@@ -52,11 +72,12 @@
           :badgeMsg="'N°'+pk.entry_number" 
           :cardImg="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+Number(pk.entry_number)+'.png'"
           :btnShow="true"
+          :button-method="getPokeInfo"
           ></PokeCards>
         </div>
       </div>
       <div v-else-if="pokeInfo.moves"
-      class="col m-0 mb-5 p-0 pb-5 h-100 bg-light border border-dark overflow-auto"
+      class="col m-0 mb-5 p-0 pb-5 h-100 bg-light overflow-y-auto"
       style="font-size: .8rem;"
       >
         <div class="row border-bottom border-dark bg-danger m-0 p-0">
@@ -134,9 +155,13 @@ export default {
   props:{
   },
   data:()=>({
+    isActive: true,
     showImg:true,
     show:false,
+    prev:'',
+    next:'',
     lista:'',
+    base_url:'',
     pokeApi:[],
     pokeDex:[],
     pokeMons:[],
@@ -154,40 +179,70 @@ export default {
   }),
   methods:
   {      
-    getRegion(api){
-      this.$store.state.load = true;
-      console.log('----getRegiones()----')
-      fetch(api)
-      .then((res)=>res.json())
-      .then((res)=>this.pokeDex=res)
-      .then(()=>this.lista=this.pokeDex.results)
-      .then(()=>setTimeout(() => {
-        this.$store.state.load = false
-      }, 1000))
-    },
-
     getPokemons(api){
-      this.$store.state.load = true;
-      console.log('----getPokemons()----')
-      fetch(api)
-        .then((res)=>res.json())
-        .then((res)=>this.pokeMons=res)
-        .then(()=>this.lista=this.pokeMons.results)
-        .then(()=>this.show = true)
-        .then(()=>setTimeout(() => {
-        this.$store.state.load = false
-      }, 1000))
+      if (api !== null) {
+        try {
+          this.$store.state.load = true;
+          // console.log('----getPokemons()----')
+          fetch(api)
+            .then((res)=>res.json())
+            .then((res)=>this.pokeMons=res)
+            .then(()=>{
+              this.lista=this.pokeMons.results;
+            })
+            .then(()=>this.show = true)
+            .then(()=>setTimeout(() => {
+            this.$store.state.load = false
+          }, 1000));
+        } catch (error) {
+          console.log(error)
+        }
+      }
     },
 
     getPokeInfo(api){
-      this.$store.state.load = true;
-      console.log('----getPokeInfo()----') 
-      fetch(api)
-        .then((res)=>res.json())
-        .then((res)=>this.pokeInfo=res)     
-        .then(()=>setTimeout(() => {
-        this.$store.state.load = false
-      }, 1000))
+      if (api !== null) {
+        try {
+          this.$store.state.load = true;
+          // console.log('----getPokeInfo()----') 
+          fetch(api)
+            .then((res)=>res.json())
+            .then((res)=>this.pokeInfo=res)     
+            .then(()=>setTimeout(() => {
+            this.$store.state.load = false
+          }, 1000))
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    },
+
+    getLista(api){
+      // console.log('--------------------');
+      // console.log('base url: '+api);
+      // console.log('url next: '+this.next);
+      // console.log('url prev: '+this.prev);
+      if (api) {
+        try {
+          if (api !== undefined || api !== null) {
+            fetch(api)
+            .then((res)=>this.base_url=res.json())
+            .then((res)=>{
+              // console.log(res);
+              this.lista=res.results;
+              // console.log(this.lista);
+              this.next=res.next;
+              // console.log('url next: '+this.next);
+              this.prev=res.previous;
+              // console.log('url prev: '+this.prev);
+              })
+          }
+        } catch (error) {
+          console.log('---ERROR---')
+          console.log(error)
+        }
+      }
+      
     }
   },
   beforeMount(){
@@ -197,7 +252,7 @@ export default {
     fetch(this.$store.state.pokeApi)
       .then((res)=>res.json())
       .then((res)=>this.pokeApi=res)
-      .then((res)=>console.log(res))
+      // .then((res)=>console.log(res))
       .then(()=>setTimeout(() => {
         this.$store.state.load = false
       }, 1000))
@@ -206,6 +261,12 @@ export default {
 </script>
 
 <style scoped>
-
+#btnLista{
+  color: rgb(70, 70, 240);
+}
+#btnLista:hover{
+  color: rgb(22, 22, 167);
+  font-weight: bolder;
+}
 
 </style>

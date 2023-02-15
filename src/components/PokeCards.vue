@@ -17,7 +17,7 @@
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light text-bg-warning py-3">{{ badgeMsg }}</span>
                 <h5 class="card-title fw-bolder text-uppercase">{{ cardTitle }}</h5>
                 <p class="card-text ">{{ cardBody }}</p>
-                <router-link v-if="btnShow" :to="''" class="btn btn-primary d-block">info...</router-link>
+                <div v-if="btnShow" v-on:click="fetchData()" class="btn btn-primary d-block">info...</div>
             </div>
         </div> 
     </div>
@@ -33,10 +33,16 @@ export default{
         pokeInfo: String,
         badgeMsg: String,
         btnShow: Boolean,
+        btnMethod: Function,
     },
     data:()=>({
         
     }),
+    methods:{
+        fetchData(){
+            this.btnMethod()
+        }
+    },
     mounted(){
     
     }
