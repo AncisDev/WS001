@@ -16,44 +16,66 @@
       <!--cambiar por v-for de botones de lista-->
       <div class="pb-2 text-center">
         <button @click="lista = regiones, showImg = false, activarAnimacion()"
-        class="btn btn-sm btn-warning rounded-pill p-1 m-1" 
+        style="font-size: .65rem;"
+        class="btn btn-sm btn-warning rounded-pill py-1 px-2 m-1" 
         >REGIONES</button>
         
         <button @click="getLista(pokeApi.pokemon), showImg = false, activarAnimacion()"
-        class="btn btn-sm btn-warning rounded-pill p-1 m-1" 
+        style="font-size: .65rem;"
+        class="btn btn-sm btn-warning rounded-pill py-1 px-2 m-1" 
         >POKEMON</button>
       </div>
     </div>
     
     <div  v-if="lista" class="row m-0 p-0 position-fixed w-100 h-100 pb-5">
-      <!-- lista lateral -->
+<!-- lista lateral -->
       <div id="lista" v-if="showOnMobile" 
       class="col-4 col-md-3 col-xl-2 bg-dark d-none d-md-block rounded-0 m-0 px-0 text-center"
       >
-      <!-- botones de paginacion -->
         <div v-if="urlApi = this.$store.state.pokeApi+'pokedex'"
         class="w-100 py-2 px-3 fixed-bottom position-relative d-flex justify-content-between align-items-center"
         >
-          <button v-on:click="getLista(prev)"
-          class="btn btn-sm btn-outline-danger text-light border-0 rounded-circle"
+        <!-- botones de paginacion prev -->
+          <button v-show="prev" v-on:click="getLista(prev)"
+          class="btn btn-sm btn-outline-danger text-danger border-0 rounded-square py-1 px-2"
           >
-            {{'<<'}}
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
           </button>
           
-          <button v-on:click="getLista(next)"
-          class="btn btn-sm btn-outline-danger text-light border-0 rounded-circle"
+          <!-- barra de busqueda -->
+          <form class="d-flex" role="search">
+            <input class="form-control mx-2 py-0 bg-dark text-light text-uppercase" 
+            type="search" 
+            placeholder="Buscar..." aria-label="Search" v-model="pokeSearch"
+            style="font-size: .7rem;"
+            >
+            <button type="button"
+            @click="pokeFound = pokeSearch, clearSearch()"
+            style="font-size: .7rem;"
+            class="btn btn-sm btn-outline-warning border-0 rounded-circle py-1 px-2" >
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+          </form>
+
+        <!-- botones de paginacion next -->
+          <button v-show="next" v-on:click="getLista(next)"
+          class="btn btn-sm btn-outline-danger text-danger border-0 rounded-square py-1 px-2"
           >
-            {{'>>'}}
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
           </button>
         </div>
-
+        <!-- lista de elementos -->
         <div style="max-height:72.8%;" 
         class="overflow-auto h-100 border-top border-bottom border-warning"
         >
-          <div v-for="item in lista" v-on:click="getPokeInfo(item.url)"
+          <div v-for="item in lista" v-on:click="getPokeInfo(item.url), offset = item.desde,clearSearch()"
           class="m-0 p-0 w-100 text-uppercase"
           >
-            <p id="btnLista" class="btn btn-sm btn-outline-primary text-light d-block border-0 m-0 px-0">
+            <p v-if="item.name.includes(pokeSearch)" id="btnLista" class="btn btn-sm btn-outline-primary text-light d-block border-0 m-0 px-0">
+              {{ item.name }}
+            </p>
+
+            <p v-else-if="!pokeSearch" id="btnLista" class="btn btn-sm btn-outline-primary text-light d-block border-0 m-0 px-0">
               {{ item.name }}
             </p>
           </div>
@@ -61,69 +83,111 @@
         </div>
       </div>
 
-      <!-- boton flotante movil -->
+<!-- menu y boton flotante movil -->
       <div v-else style="z-index: 4000;"
       class="fixed-bottom mx-0 mb-5"
       >
         <div class="dropdown">
           <!-- boton de menu movil -->
           <button id="btnFlotante" type="button"
-          data-bs-toggle="dropdown" aria-expanded="false"
-          data-bs-auto-close="outside"
+          data-bs-toggle="dropdown" aria-expanded="true"
+          data-bs-auto-close="outside" @click="girarIcono"
           style="box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, .5);"
           :class="{ 'rotate-transition': actAnim, 'giroConLuces-anim': actAnim }"
           class="dropdown-toggle btn btn-dark" >
             <div>
-              <i class="fa fa-times fa-lg" aria-hidden="false" 
-              @click="girarIcono"
+              <i class="fa fa-times fa-lg" aria-hidden="true" 
               :style="{ transform: 'rotate(' + angulo + 'deg)' }"
               ></i>
             </div>
           </button>
 
           <!-- menu flotante movil -->
-          <ul class="dropdown-menu overflow-y-auto py-0" style="max-height: 400px;font-size: .8rem;">
+          <ul class="dropdown-menu d-black bg-danger w-100 overflow-y-auto py-2" style="max-width: 400px;max-height: 400px;font-size: .8rem;">
             <!-- botones de paginacion en menu flotante -->
             <div v-if="urlApi = this.$store.state.pokeApi+'pokedex'"
-            class="w-100 px-3 fixed-bottom position-relative d-flex justify-content-between align-items-center"
+            class="w-100 px-3 py-2 bg-danger fixed-bottom position-relative d-flex justify-content-between align-items-center"
             >
-              <button v-on:click="getLista(prev)"
-              class="btn btn-sm text-gb-warning border-0 rounded-circle"
+              <!-- botones de paginacion prev -->
+              <button v-show="prev" v-on:click="getLista(prev)"
+              class="btn btn-sm btn-outline-warning  border-0 rounded-square py-1 px-2"
               >
-                {{'<<'}}
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
               </button>
               
-              <button v-on:click="getLista(next)"
-              class="btn btn-sm text-gb-warning border-0 rounded-circle"
+              <!-- barra de busqueda -->
+              <form class="d-flex" role="search">
+                <input class="form-control mx-2 py-0 bg-secondary-subtle text-primary text-uppercase" 
+                type="search" @blur="clearSearch" 
+                placeholder="Buscar..." aria-label="Search" v-model="pokeSearch"
+                style="font-size: .7rem;"
+                >
+                <button type="submit"
+                style="font-size: .7rem;"
+                class="btn btn-sm btn-outline-primary border-0 rounded-circle py-1 px-2" >
+                  <i class="fa fa-search text-warning" aria-hidden="true"></i>
+                </button>
+              </form>
+
+              <!-- botones de paginacion next -->
+              <button v-show="next" v-on:click="getLista(next)"
+              class="btn btn-sm btn-outline-warning  border-0 rounded-square py-1 px-2"
               >
-                {{'>>'}}
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
               </button>
             </div>
 
-            <hr class="m-0 p-0">
-
-            <li v-for="item in lista" v-on:click="getPokeInfo(item.url)"><a class="dropdown-item text-uppercase" href="#">{{ item.name }}</a></li>
+            <!-- <hr class="m-0 p-0"> -->
+            <!-- lista de elementos -->
+            <div v-for="item in lista" 
+            class="bg-light m-0 p-0 border-0"
+            >
+              <li v-on:click="getPokeInfo(item.url), offset = item.desde,pokeFound = pokeSearch,clearSearch()"
+              class="text-uppercase btn btn-sm btn-outline-primary d-block text-start rounded-0 border-0 px-4 m-0" 
+              v-if="item.name.includes(pokeSearch)" id="elLista"
+              >{{ item.name }}</li>
+  
+              <li v-on:click="getPokeInfo(item.url), offset = item.desde,pokeFound = pokeSearch,clearSearch()"
+              class="text-uppercase btn btn-sm btn-outline-primary d-block text-start rounded-0 border-0 px-4 m-0" 
+              v-else-if="!pokeSearch" id="elLista"
+              >{{ item.name }}</li>
+            </div>
           </ul>
         </div>
       </div>
 
-      <!-- vista de tarjetas -->
-      <div v-if="pokeInfo.pokemon_entries"
+<!-- vista de tarjetas -->
+      <!-- vista album -->
+      <div v-if="pokeInfo.results"
       style="max-height: 80%;" 
       class="col w-100 m-0 px-0 py-4 h-100 overflow-auto"
       >
         <div class="row m-0 mb-4 p-0 ">
-          <PokeCards v-for="(pk,i) in pokeInfo.pokemon_entries" :key="i"
-          class="col my-4" 
-          :cardTitle="pk.pokemon_species.name"
-          :cardBody="''"
-          :badgeMsg="'N°'+pk.entry_number" 
-          :cardImg="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+(getRegion(pokeInfo,i))+'.png'"
-          :btnShow="true"
-          :button-method="getPokeInfo"
-          ></PokeCards>
+          <div v-for="(pk,i) in pokeInfo.results" :key="i">
+            <PokeCards v-if="pk.name.includes(pokeFound)" 
+            class="col my-4" 
+            :cardTitle="pk.name"
+            :cardBody="''"
+            :badgeMsg="'N°'+(getRegion(pokeInfo,i))" 
+            :cardImg="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+(offset+i)+'.png'"
+            :btnShow="true"
+            ></PokeCards>
+
+            <PokeCards v-else-if="!pokeFound"
+            class="col my-4" 
+            :cardTitle="pk.name"
+            :cardBody="''"
+            :badgeMsg="'N°'+(getRegion(pokeInfo,i))" 
+            :cardImg="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+(offset+i)+'.png'"
+            :btnShow="true"
+            ></PokeCards>
+          </div>
+
+          
         </div>
       </div>
+
+      <!-- vista pokedex -->
       <div v-else-if="pokeInfo.moves"
       class="col m-0 p-0 pb-5 h-100 bg-light overflow-y-auto"
       style="font-size: .8rem;"
@@ -209,10 +273,12 @@ export default {
     isActive: true,
     showImg:true,
     show:false,
-    prev:'',
-    next:'',
+    prev:null,
+    next:null,
     lista:'',
     base_url:'',
+    pokeSearch: null,
+    pokeFound:null,
     pokeApi:[],
     pokeDex:[],
     pokeMons:[],
@@ -228,6 +294,7 @@ export default {
       {name: 'alola',id: '7',url: 'https://pokeapi.co/api/v2/pokemon/?offset=721&limit=88',desde: 722,hasta: 809},
       {name: 'galar',id: '8',url: 'https://pokeapi.co/api/v2/pokemon/?offset=809&limit=89',desde: 810,hasta: 898}
     ],
+    offset:null,
     colorPorTipo:[
       {nombre: 'normal', color: '#A8A878'},
       {nombre: 'fire', color: '#F08030'},
@@ -279,7 +346,10 @@ export default {
           // console.log('----getPokeInfo()----') 
           fetch(api)
             .then((res)=>res.json())
-            .then((res)=>this.pokeInfo=res)     
+            .then((res)=>{
+              this.pokeInfo=res
+              // console.log(this.pokeInfo)
+            })     
             .then(()=>setTimeout(() => {
             this.$store.state.load = false
           }, 1000))
@@ -325,7 +395,7 @@ export default {
     getRegion(reg,i) {
       const region = this.regiones.find(r => r.nombre === reg.name);
       // console.log(reg)
-      // console.log(region)
+      // console.log(region.desde+i)
       return (reg ? (region.desde+i) : '');
     },
 
@@ -336,6 +406,12 @@ export default {
     activarAnimacion() {
       this.actAnim = !this.actAnim;
     },
+
+    clearSearch() {
+      setTimeout(() => {
+        this.pokeSearch = '';
+      }, 50);
+    },
   },
   computed: {
     showOnMobile() {
@@ -345,7 +421,20 @@ export default {
       }else{
         return false
       }       
-    }
+    },
+
+    filteredList() {
+      return this.list.filter(item => {
+        return (!this.region || item.region === this.region) && (!this.pokemon || item.name.toLowerCase().includes(this.pokemon.toLowerCase()));
+      });
+    },
+
+
+    filteredPokemon() {
+      return this.pokemonList.filter(pokemon => {
+        return (!this.region || pokemon.region === this.region) && (!this.pokemon || pokemon.name.toLowerCase().includes(this.pokemon.toLowerCase()));
+      });
+    },
   },
   beforeMount(){
     this.$store.state.load = true; 
@@ -375,11 +464,22 @@ export default {
   transition: all ease-in-out;
 }
 .fa-times{
-  color: yellow;
+  color: #ffcf3ee8;
   transition: transform 500ms ease;
   transform:rotate(45deg);
 }
+.form-control::placeholder{
+  color: #878792e8;
+}
+#elLista{
+  color: black;
+}
+#elLista:hover{
+  color: white;
+}
 
+
+/* animacion */
 .giroConLuces-anim {
   animation: giroConLuces ease-in-out;
   animation-duration: 1s;
@@ -391,7 +491,7 @@ export default {
 @keyframes giroConLuces {
     0%{
       border-top-color: rgb(209, 80, 209);
-      transform: rotate(0deg);        
+      transform: rotate(0deg);       
     }
 
     25%{
@@ -407,7 +507,7 @@ export default {
     }
 
     100%{
-      border-top-color: rgb(209, 80, 209);
+      border-top-color: rgb(206, 14, 206);
       transform: rotate(360deg);
     }
 }
