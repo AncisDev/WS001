@@ -1,6 +1,6 @@
 <template>
   <div class="pokemon">
-    <div class="bg-dark text-light border-bottom border-secondary fw-bolder">
+    <div class="bg-dark text-light border-bottom border-warning fw-bolder">
       
       <div>
         <div v-if="pokeMons.descriptions" v-show="show" v-for="desc in pokeMons.descriptions"
@@ -15,43 +15,45 @@
 
       <!--cambiar por v-for de botones de lista-->
       <div class="pb-2 text-center">
-        <button v-on:click="getLista(pokeApi.pokedex+'?limit=10'), showImg = false"
+        <button @click="lista = regiones, showImg = false, activarAnimacion()"
         class="btn btn-sm btn-warning rounded-pill p-1 m-1" 
         >REGIONES</button>
         
-        <button v-on:click="getLista(pokeApi.pokemon), showImg = false"
+        <button @click="getLista(pokeApi.pokemon), showImg = false, activarAnimacion()"
         class="btn btn-sm btn-warning rounded-pill p-1 m-1" 
         >POKEMON</button>
       </div>
     </div>
     
-    <div  v-if="lista" class="row m-0 p-0 position-fixed w-100 h-100">
+    <div  v-if="lista" class="row m-0 p-0 position-fixed w-100 h-100 pb-5">
+      <!-- lista lateral -->
       <div id="lista" v-if="showOnMobile" 
-      class="col-4 col-md-3 col-xl-2 bg-dark d-none d-md-block rounded-0 m-0 px-0 h-100 text-center"
+      class="col-4 col-md-3 col-xl-2 bg-dark d-none d-md-block rounded-0 m-0 px-0 text-center"
       >
+      <!-- botones de paginacion -->
         <div v-if="urlApi = this.$store.state.pokeApi+'pokedex'"
-        class="w-100 py-3 px-3 fixed-bottom position-relative d-flex justify-content-between align-items-center"
+        class="w-100 py-2 px-3 fixed-bottom position-relative d-flex justify-content-between align-items-center"
         >
           <button v-on:click="getLista(prev)"
-          class="btn btn-sm btn-outline-warning text-primary border-0 rounded-circle"
+          class="btn btn-sm btn-outline-danger text-light border-0 rounded-circle"
           >
             {{'<<'}}
           </button>
           
           <button v-on:click="getLista(next)"
-          class="btn btn-sm btn-outline-warning text-primary border-0 rounded-circle"
+          class="btn btn-sm btn-outline-danger text-light border-0 rounded-circle"
           >
             {{'>>'}}
           </button>
         </div>
 
-        <div style="max-height: 70%;" 
-        class="overflow-auto h-100 border-top border-bottom"
+        <div style="max-height:72.8%;" 
+        class="overflow-auto h-100 border-top border-bottom border-warning"
         >
           <div v-for="item in lista" v-on:click="getPokeInfo(item.url)"
           class="m-0 p-0 w-100 text-uppercase"
           >
-            <p id="btnLista" class="btn btn-sm btn-outline-danger d-block border-0 m-0 px-0">
+            <p id="btnLista" class="btn btn-sm btn-outline-primary text-light d-block border-0 m-0 px-0">
               {{ item.name }}
             </p>
           </div>
@@ -59,26 +61,56 @@
         </div>
       </div>
 
+      <!-- boton flotante movil -->
       <div v-else style="z-index: 4000;"
-      class="position-fixed bottom-0 start-50 m-5 translate-middle"
+      class="fixed-bottom mx-0 mb-5"
       >
         <div class="dropdown">
-          <button type="button" data-bs-toggle="dropdown" aria-expanded="false"
-          style="box-shadow: 2px 2px 2px 0 rgba(250, 250, 116, .5); border: .5px solid rgba(250, 250, 116, .5);"
-          class="btn btn-primary rounded-circle dropdown-toggle" >
-            <i class="fa fa-times" aria-hidden="true"></i>
+          <!-- boton de menu movil -->
+          <button id="btnFlotante" type="button"
+          data-bs-toggle="dropdown" aria-expanded="false"
+          data-bs-auto-close="outside"
+          style="box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, .5);"
+          :class="{ 'rotate-transition': actAnim, 'giroConLuces-anim': actAnim }"
+          class="dropdown-toggle btn btn-dark" >
+            <div>
+              <i class="fa fa-times fa-lg" aria-hidden="false" 
+              @click="girarIcono"
+              :style="{ transform: 'rotate(' + angulo + 'deg)' }"
+              ></i>
+            </div>
           </button>
-          <ul class="dropdown-menu overflow-y-auto" style="max-height: 400px;font-size: .8rem;">
+
+          <!-- menu flotante movil -->
+          <ul class="dropdown-menu overflow-y-auto py-0" style="max-height: 400px;font-size: .8rem;">
+            <!-- botones de paginacion en menu flotante -->
+            <div v-if="urlApi = this.$store.state.pokeApi+'pokedex'"
+            class="w-100 px-3 fixed-bottom position-relative d-flex justify-content-between align-items-center"
+            >
+              <button v-on:click="getLista(prev)"
+              class="btn btn-sm text-gb-warning border-0 rounded-circle"
+              >
+                {{'<<'}}
+              </button>
+              
+              <button v-on:click="getLista(next)"
+              class="btn btn-sm text-gb-warning border-0 rounded-circle"
+              >
+                {{'>>'}}
+              </button>
+            </div>
+
+            <hr class="m-0 p-0">
+
             <li v-for="item in lista" v-on:click="getPokeInfo(item.url)"><a class="dropdown-item text-uppercase" href="#">{{ item.name }}</a></li>
           </ul>
         </div>
       </div>
 
-
-      
+      <!-- vista de tarjetas -->
       <div v-if="pokeInfo.pokemon_entries"
       style="max-height: 80%;" 
-      class="col w-100 m-0 px-0 py-4 overflow-auto"
+      class="col w-100 m-0 px-0 py-4 h-100 overflow-auto"
       >
         <div class="row m-0 mb-4 p-0 ">
           <PokeCards v-for="(pk,i) in pokeInfo.pokemon_entries" :key="i"
@@ -93,7 +125,7 @@
         </div>
       </div>
       <div v-else-if="pokeInfo.moves"
-      class="col m-0 mb-5 p-0 pb-5 h-100 bg-light overflow-y-auto"
+      class="col m-0 p-0 pb-5 h-100 bg-light overflow-y-auto"
       style="font-size: .8rem;"
       >
         <div class="row border-bottom border-dark bg-danger m-0 p-0">
@@ -104,7 +136,7 @@
           :badgeMsg="'N°'+pokeInfo.id" 
           :cardImg="pokeInfo.sprites.other.dream_world.front_default"
           ></PokeCards>
-          <div class="col-12 col-md d-flex justify-content-start align-items-center m-0 p-0">
+          <div class="col-12 col-md d-flex justify-content-center justify-content-md-start align-items-center m-0 p-0">
             <h3 class="mx-2">Tipos</h3>
             <div v-for="tipo in pokeInfo.types" >
               <span id="spnTipo" :style="{backgroundColor: getBgColor(tipo)}" 
@@ -145,6 +177,8 @@
             </div>
           </div>
         </div>
+
+        <hr class="border-light my-5">
       </div>
     </div>
 
@@ -170,6 +204,8 @@ export default {
   props:{
   },
   data:()=>({
+    angulo: 45,
+    actAnim: false, 
     isActive: true,
     showImg:true,
     show:false,
@@ -182,14 +218,15 @@ export default {
     pokeMons:[],
     pokeInfo:[],
     regiones:[
-      {nombre: 'kanto',id: '1',url: 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151',desde: 1,hasta: 151},
-      {nombre: 'johto',id: '2',url: 'https://pokeapi.co/api/v2/pokemon/?offset=151&limit=100',desde: 152,hasta: 251},
-      {nombre: 'hoenn',id: '3',url: 'https://pokeapi.co/api/v2/pokemon/?offset=251&limit=135',desde: 252,hasta: 386},
-      {nombre: 'sinnoh',id: '4',url: 'https://pokeapi.co/api/v2/pokemon/?offset=386&limit=107',desde: 387,hasta: 493},
-      {nombre: 'teselia',id: '5',url: 'https://pokeapi.co/api/v2/pokemon/?offset=493&limit=156',desde: 494,hasta: 649},
-      {nombre: 'kalos',id: '6',url: 'https://pokeapi.co/api/v2/pokemon/?offset=649&limit=72',desde: 650,hasta: 721},
-      {nombre: 'alola',id: '7',url: 'https://pokeapi.co/api/v2/pokemon/?offset=721&limit=88',desde: 722,hasta: 809},
-      {nombre: 'galar',id: '8',url: 'https://pokeapi.co/api/v2/pokemon/?offset=809&limit=89',desde: 810,hasta: 898}
+      {name: 'nacional',id: '0',url: 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1279',desde: 1,hasta: 1279},
+      {name: 'kanto',id: '1',url: 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151',desde: 1,hasta: 151},
+      {name: 'johto',id: '2',url: 'https://pokeapi.co/api/v2/pokemon/?offset=151&limit=100',desde: 152,hasta: 251},
+      {name: 'hoenn',id: '3',url: 'https://pokeapi.co/api/v2/pokemon/?offset=251&limit=135',desde: 252,hasta: 386},
+      {name: 'sinnoh',id: '4',url: 'https://pokeapi.co/api/v2/pokemon/?offset=386&limit=107',desde: 387,hasta: 493},
+      {name: 'teselia',id: '5',url: 'https://pokeapi.co/api/v2/pokemon/?offset=493&limit=156',desde: 494,hasta: 649},
+      {name: 'kalos',id: '6',url: 'https://pokeapi.co/api/v2/pokemon/?offset=649&limit=72',desde: 650,hasta: 721},
+      {name: 'alola',id: '7',url: 'https://pokeapi.co/api/v2/pokemon/?offset=721&limit=88',desde: 722,hasta: 809},
+      {name: 'galar',id: '8',url: 'https://pokeapi.co/api/v2/pokemon/?offset=809&limit=89',desde: 810,hasta: 898}
     ],
     colorPorTipo:[
       {nombre: 'normal', color: '#A8A878'},
@@ -291,6 +328,14 @@ export default {
       // console.log(region)
       return (reg ? (region.desde+i) : '');
     },
+
+    girarIcono() {
+      this.angulo += 45;
+    },
+
+    activarAnimacion() {
+      this.actAnim = !this.actAnim;
+    },
   },
   computed: {
     showOnMobile() {
@@ -318,17 +363,52 @@ export default {
 </script>
 
 <style scoped>
-#btnLista{
-  color: rgb(70, 70, 240);
-}
-#btnLista:hover{
-  color: rgb(22, 22, 167);
-  font-weight: bolder;
-}
 .dropdown-toggle::after {
-    display: none;
+  display: none;
+}
+#btnFlotante{
+  border: 3px solid rgba(0,0,0,0);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  padding: 4px;
+  transition: all ease-in-out;
 }
 .fa-times{
-  color: rgb(250, 250, 116);
+  color: yellow;
+  transition: transform 500ms ease;
+  transform:rotate(45deg);
+}
+
+.giroConLuces-anim {
+  animation: giroConLuces ease-in-out;
+  animation-duration: 1s;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+}
+
+/* keyframes */
+@keyframes giroConLuces {
+    0%{
+      border-top-color: rgb(209, 80, 209);
+      transform: rotate(0deg);        
+    }
+
+    25%{
+      border-top-color: rgb(248, 41, 41);
+    }
+
+    50%{
+      border-top-color: rgb(40, 170, 40);
+    }
+
+    75%{
+      border-top-color: rgb(127, 204, 240);
+    }
+
+    100%{
+      border-top-color: rgb(209, 80, 209);
+      transform: rotate(360deg);
+    }
 }
 </style>
