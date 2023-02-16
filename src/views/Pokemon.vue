@@ -130,7 +130,7 @@
                 placeholder="Buscar..." aria-label="Search" v-model="pokeSearch"
                 style="font-size: .7rem;"
                 >
-                <button type="submit"
+                <button type="button"
                 style="font-size: .7rem;"
                 class="btn btn-sm btn-outline-primary border-0 rounded-circle py-1 px-2" >
                   <i class="fa fa-search text-warning" aria-hidden="true"></i>
