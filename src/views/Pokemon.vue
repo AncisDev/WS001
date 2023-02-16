@@ -20,18 +20,17 @@
         >REGIONES</button>
         
         <button v-on:click="getLista(pokeApi.pokemon), showImg = false"
-        :class="{}"
         class="btn btn-sm btn-warning rounded-pill p-1 m-1" 
         >POKEMON</button>
       </div>
     </div>
     
     <div  v-if="lista" class="row m-0 p-0 position-fixed w-100 h-100">
-      <div id="lista" 
-      class="col-4 col-md-3 col-xl-2 bg-dark rounded-0 m-0 px-0 h-100 text-center"
+      <div id="lista" v-if="showOnMobile" 
+      class="col-4 col-md-3 col-xl-2 bg-dark d-none d-md-block rounded-0 m-0 px-0 h-100 text-center"
       >
         <div v-if="urlApi = this.$store.state.pokeApi+'pokedex'"
-        class="w-100 py-1 px-3 fixed-bottom border-bottom border-1 border-secondary position-relative d-flex justify-content-between align-items-center py-3"
+        class="w-100 py-3 px-3 fixed-bottom position-relative d-flex justify-content-between align-items-center"
         >
           <button v-on:click="getLista(prev)"
           class="btn btn-sm btn-outline-warning text-primary border-0 rounded-circle"
@@ -47,7 +46,7 @@
         </div>
 
         <div style="max-height: 70%;" 
-        class="overflow-auto h-100 pb-5 pb-md-0"
+        class="overflow-auto h-100 border-top border-bottom"
         >
           <div v-for="item in lista" v-on:click="getPokeInfo(item.url)"
           class="m-0 p-0 w-100 text-uppercase"
@@ -59,18 +58,35 @@
           <br>
         </div>
       </div>
+
+      <div v-else style="z-index: 4000;"
+      class="position-fixed bottom-0 start-50 m-5 translate-middle"
+      >
+        <div class="dropdown">
+          <button type="button" data-bs-toggle="dropdown" aria-expanded="false"
+          style="box-shadow: 2px 2px 2px 0 rgba(250, 250, 116, .5); border: .5px solid rgba(250, 250, 116, .5);"
+          class="btn btn-primary rounded-circle dropdown-toggle" >
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu overflow-y-auto" style="max-height: 400px;font-size: .8rem;">
+            <li v-for="item in lista" v-on:click="getPokeInfo(item.url)"><a class="dropdown-item text-uppercase" href="#">{{ item.name }}</a></li>
+          </ul>
+        </div>
+      </div>
+
+
       
       <div v-if="pokeInfo.pokemon_entries"
       style="max-height: 80%;" 
-      class="col w-100 m-0 p-0 overflow-auto"
+      class="col w-100 m-0 px-0 py-4 overflow-auto"
       >
         <div class="row m-0 mb-4 p-0 ">
-          <PokeCards v-for="pk in pokeInfo.pokemon_entries"
+          <PokeCards v-for="(pk,i) in pokeInfo.pokemon_entries" :key="i"
           class="col my-4" 
           :cardTitle="pk.pokemon_species.name"
           :cardBody="''"
           :badgeMsg="'N°'+pk.entry_number" 
-          :cardImg="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+Number(pk.entry_number)+'.png'"
+          :cardImg="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+(getRegion(pokeInfo,i))+'.png'"
           :btnShow="true"
           :button-method="getPokeInfo"
           ></PokeCards>
@@ -91,12 +107,13 @@
           <div class="col-12 col-md d-flex justify-content-start align-items-center m-0 p-0">
             <h3 class="mx-2">Tipos</h3>
             <div v-for="tipo in pokeInfo.types" >
-              <span  class="text-bg-warning rounded-pill mx-2 p-2">{{ tipo.type.name }}</span>
+              <span id="spnTipo" :style="{backgroundColor: getBgColor(tipo)}" 
+              class="text-light rounded-pill mx-2 p-2">{{ tipo.type.name }}</span>
             </div> 
           </div>
         </div>
 
-        <div class="row border-top border-dark m-0 mb-5 px-5 py-3">
+        <div class="row border-top border-dark m-0 px-5 py-3">
           <div class="col-md-6 my-2 px-0">
             <h3 class="tex-bg-dark">Estadisticas</h3>
             <hr>
@@ -121,14 +138,12 @@
           </div>
 
           <div class="col-12 m-0  p-0">
-            <div class="row my-2 p-0 pb-5 d-flex justify-content-evenly align-items-center">
+            <div class="row my-2 p-0 d-flex justify-content-evenly align-items-center">
               <h5 class="">Exp. Base</h5>
               <hr >
               <span class="text-bg-primary text-end rounded-pill mx-auto py-2 px-4">{{ pokeInfo.base_experience }}XP</span>
             </div>
           </div>
-
-          <hr class="mb-5">
         </div>
       </div>
     </div>
@@ -166,16 +181,36 @@ export default {
     pokeDex:[],
     pokeMons:[],
     pokeInfo:[],
-    colorTipo:[
-      {grass: 'green'},
-      {fire: 'red'},
-      {water: 'blue'},
-      {electric: 'yellow'},
-      {fly: 'verde'},
-      {ground: 'verde'},
-      {rock: 'verde'},
-      {psych: 'verde'},
+    regiones:[
+      {nombre: 'kanto',id: '1',url: 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151',desde: 1,hasta: 151},
+      {nombre: 'johto',id: '2',url: 'https://pokeapi.co/api/v2/pokemon/?offset=151&limit=100',desde: 152,hasta: 251},
+      {nombre: 'hoenn',id: '3',url: 'https://pokeapi.co/api/v2/pokemon/?offset=251&limit=135',desde: 252,hasta: 386},
+      {nombre: 'sinnoh',id: '4',url: 'https://pokeapi.co/api/v2/pokemon/?offset=386&limit=107',desde: 387,hasta: 493},
+      {nombre: 'teselia',id: '5',url: 'https://pokeapi.co/api/v2/pokemon/?offset=493&limit=156',desde: 494,hasta: 649},
+      {nombre: 'kalos',id: '6',url: 'https://pokeapi.co/api/v2/pokemon/?offset=649&limit=72',desde: 650,hasta: 721},
+      {nombre: 'alola',id: '7',url: 'https://pokeapi.co/api/v2/pokemon/?offset=721&limit=88',desde: 722,hasta: 809},
+      {nombre: 'galar',id: '8',url: 'https://pokeapi.co/api/v2/pokemon/?offset=809&limit=89',desde: 810,hasta: 898}
     ],
+    colorPorTipo:[
+      {nombre: 'normal', color: '#A8A878'},
+      {nombre: 'fire', color: '#F08030'},
+      {nombre: 'water', color: '#6890F0'},
+      {nombre: 'electric', color: '#F8D030'},
+      {nombre: 'grass', color: '#78C850'},
+      {nombre: 'ice', color: '#98D8D8'},
+      {nombre: 'fighting', color: '#C03028'},
+      {nombre: 'poison', color: '#A040A0'},
+      {nombre: 'ground', color: '#E0C068'},
+      {nombre: 'flying', color: '#A890F0'},
+      {nombre: 'psychic', color: '#F85888'},
+      {nombre: 'bug', color: '#A8B820'},
+      {nombre: 'rock', color: '#B8A038'},
+      {nombre: 'ghost', color: '#705898'},
+      {nombre: 'dragon', color: '#7038F8'},
+      {nombre: 'dark', color: '#705848'},
+      {nombre: 'steel', color: '#B8B8D0'},
+      {nombre: 'fairy', color: '#EE99AC'}
+    ]
   }),
   methods:
   {      
@@ -243,6 +278,28 @@ export default {
         }
       }
       
+    },
+
+    getBgColor(tipo) {
+      const color = this.colorPorTipo.find(c => c.nombre === tipo.type.name);
+      return color ? color.color : '';
+    },
+
+    getRegion(reg,i) {
+      const region = this.regiones.find(r => r.nombre === reg.name);
+      // console.log(reg)
+      // console.log(region)
+      return (reg ? (region.desde+i) : '');
+    },
+  },
+  computed: {
+    showOnMobile() {
+      // muestra el elemento cuando el ancho es de 768px o menos
+      if (window.innerWidth >= 768) {
+        return true  
+      }else{
+        return false
+      }       
     }
   },
   beforeMount(){
@@ -268,5 +325,10 @@ export default {
   color: rgb(22, 22, 167);
   font-weight: bolder;
 }
-
+.dropdown-toggle::after {
+    display: none;
+}
+.fa-times{
+  color: rgb(250, 250, 116);
+}
 </style>

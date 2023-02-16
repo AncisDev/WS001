@@ -85,9 +85,13 @@ export default {
     ]
   }),
   methods:{
-    insertarRuta(ruta,idx){
+    loadOff(){
+      this.$store.state.load = false;
+    },
+
+    insertarRuta(ruta){
       this.$store.state.load = true;
-      this.$router.push({name:ruta, params:{ id: idx}});
+      this.$router.push({name:ruta, params:{ id: this.$route.name}});
       setTimeout(() => {
        this.$store.state.load = false;        
       }, 600);

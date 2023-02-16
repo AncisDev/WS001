@@ -1,20 +1,20 @@
 <template>
     <div class="pokeCards">
         <div id="pCard"
-        class="card bg-danger border border-dark text-light mx-auto p-3"
-        style="width: 12rem;width:300px;max-width: 75%;"
+        class="card bg-danger border border-dark text-light mx-auto px-3 py-5"
+        style="width: 400px;max-width: 75%;box-shadow: 4px 4px 0 0 rgba(0, 0, 0, .3);"
         >
-            <div style="border-radius:100%;max-width: 100%;max-height: 100%;"
-            class="mx-auto border border-dark bg-light"
+            <div class="card-header mx-auto rounded-circle border border-dark bg-light"
+            style="width: 250px;height: 250px;"
             >
-               <img :src=cardImg alt=""
-                class="card-img-top w-100 h-100" 
-                style="transform: scale(1.1);"
+                <img :src=cardImg alt=""
+                class="card-img-top" 
+                style="transform: scale(1.3);height: 100%;max-height: 300px;"
                 > 
             </div>
-            
-            <div class="card-body text-center">
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light text-bg-warning py-3">{{ badgeMsg }}</span>
+            <hr class="border-danger">
+            <div class="card-body text-center bg-danger">
+                <span class="position-absolute top-0 start-100 translate-middle badge z-index rounded-pill border border-light text-bg-warning py-4 fs-6">{{ badgeMsg }}</span>
                 <h5 class="card-title fw-bolder text-uppercase">{{ cardTitle }}</h5>
                 <p class="card-text ">{{ cardBody }}</p>
                 <div v-if="btnShow" v-on:click="fetchData()" class="btn btn-primary d-block">info...</div>

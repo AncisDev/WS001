@@ -54,7 +54,7 @@
                 <ul class="dropdown-menu bg-success">
                     <li v-for="sr in r.subRuta" >
                         <a class="btn btn-sm border-0 dropdown-item" 
-                        v-on:click="insertarSubRuta(sr.nombre,r.nombre)" 
+                        v-on:click="insertarSubRuta(sr.nombre)" 
                         >
                             {{ sr.nombre }}
                         </a>
@@ -78,7 +78,7 @@ export default{
             {nombre: 'Wiki', ruta:'/wiki', titulo: '', 
                 subRuta:[
                     {nombre:'Digimon', ruta:'/digimon', titulo: 'Digi Wiki'},
-                    {nombre:'Pokemon', ruta:'/pokemon', titulo: 'Poke Wiki'},
+                    {nombre:'Pokemon', ruta:'/Pokemon', titulo: 'Poke Wiki'},
             ]},
             {nombre: 'Contacto', ruta:'/contacto'}
         ],
@@ -93,11 +93,11 @@ export default{
             }, 1000);
         },
    
-        insertarSubRuta(ruta,subRuta){
+        insertarSubRuta(ruta){
             this.$store.state.load = true;
             
             // setTimeout(() => {
-                this.$router.push({name: ruta, params:{ id: subRuta }});
+                this.$router.push({name:ruta, params:{ id: this.$route.name}});
             // }, 600);
             // this.$store.state.load = false;
         },

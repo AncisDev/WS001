@@ -27,8 +27,8 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Digimon.vue')
   },
   {
-    path: '/:id/pokedex',
-    name: 'Pokedex',
+    path: '/:id/pokemon',
+    name: 'Pokemon',
     component: () => import(/* webpackChunkName: "about" */ '../views/Pokemon.vue')
   },
   {
