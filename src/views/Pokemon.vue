@@ -2,36 +2,44 @@
   <div class="pokemon">
     <div class="bg-dark text-light border-bottom border-warning fw-bolder">
       
-      <div>
+      <!-- <div>
         <div v-if="pokeMons.descriptions" v-show="show" v-for="desc in pokeMons.descriptions"
         class="bg-dark text-center w-100 m-0 p-0"
+        
         >
           <span v-if="desc.language.name == 'es'" 
           class="badge fs-2 text-warning text-wrap py-2"
+          style="font-size: 1rem;"
           >{{desc.description}}</span>
         </div>
-        <h2 v-else class="text-warning text-center fw-bolder py-2">¡Atrapalos todos!</h2>
-      </div>
+        <h2 v-else class="text-warning text-center fw-bolder py-2"
+        style="font-size: 1rem;"
+        >¡Atrapalos todos!</h2>
+      </div> -->
 
       <!--cambiar por v-for de botones de lista-->
-      <div class="pb-2 text-center">
+      <div class="py-2 text-center">
         <button @click="lista = regiones, showImg = false, activarAnimacion()"
         style="font-size: .65rem;"
         class="btn btn-sm btn-warning rounded-pill py-1 px-2 m-1" 
         >REGIONES</button>
         
-        <button @click="getLista(pokeApi.pokemon), showImg = false, activarAnimacion()"
+        <button @click="getLista(pokeApi.pokemon+'?limit=100'), showImg = false, activarAnimacion()"
         style="font-size: .65rem;"
         class="btn btn-sm btn-warning rounded-pill py-1 px-2 m-1" 
         >POKEMON</button>
       </div>
     </div>
     
-    <div  v-if="lista" class="row m-0 p-0 position-fixed w-100 h-100 pb-5">
+    <div  v-if="lista" 
+    class="row m-0 p-0 position-fixed w-100 h-100 pb-5"
+    >
 <!-- lista lateral -->
       <div id="lista" v-if="showOnMobile" 
+      style="max-height:100%;"
       class="col-4 col-md-3 col-xl-2 bg-dark d-none d-md-block rounded-0 m-0 px-0 text-center"
       >
+      <!-- paginacion y busqueda -->
         <div v-if="urlApi = this.$store.state.pokeApi+'pokedex'"
         class="w-100 py-2 px-3 fixed-bottom position-relative d-flex justify-content-between align-items-center"
         >
@@ -65,8 +73,8 @@
           </button>
         </div>
         <!-- lista de elementos -->
-        <div style="max-height:72.8%;" 
-        class="overflow-auto h-100 border-top border-bottom border-warning"
+        <div  
+        class="overflow-y-auto h-75 border-top border-bottom border-warning"
         >
           <div v-for="item in lista" v-on:click="getPokeInfo(item.url), offset = item.desde,clearSearch()"
           class="m-0 p-0 w-100 text-uppercase"
