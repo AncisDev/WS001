@@ -132,14 +132,14 @@ h4{
     }
 input{
     color: #20c997;
-    width: 75%;
+    width: 80%;
     border: 1px dotted #ffc107;
     box-shadow: 3px 3px 3px 0 rgba(255, 255, 255, .2);
     font-size: .75rem;
 }
 textarea{
     color: #20c997;
-    width: 75%;
+    width: 80%;
     height: 100%;
     max-height: 200px;
     /* pointer-events: none; */
