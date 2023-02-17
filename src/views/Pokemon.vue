@@ -178,19 +178,23 @@
           class="col my-4" 
           >
             <PokeCards v-if="pk.name.includes(pokeSearch)" 
+            v-on:obj="childValue"
             :cardTitle="pk.name"
             :cardBody="''"
             :badgeMsg="'N°'+(offset+i)" 
             :cardImg="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+(offset+i)+'.png'"
             :btnShow="true"
+            :urlApi="pk.url"
             ></PokeCards>
 
             <PokeCards v-else-if="!pokeSearch" 
+            v-on:obj="childValue"
             :cardTitle="pk.name"
             :cardBody="''"
             :badgeMsg="'N°'+(offset+i)" 
             :cardImg="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+(offset+i)+'.png'"
             :btnShow="true"
+            :urlApi="pk.url"
             ></PokeCards>
           </div>
 
@@ -304,7 +308,9 @@ export default {
       {name: 'teselia',id: '5',url: 'https://pokeapi.co/api/v2/pokemon/?offset=493&limit=156',desde: 494,hasta: 649},
       {name: 'kalos',id: '6',url: 'https://pokeapi.co/api/v2/pokemon/?offset=649&limit=72',desde: 650,hasta: 721},
       {name: 'alola',id: '7',url: 'https://pokeapi.co/api/v2/pokemon/?offset=721&limit=88',desde: 722,hasta: 809},
-      {name: 'galar',id: '8',url: 'https://pokeapi.co/api/v2/pokemon/?offset=809&limit=89',desde: 810,hasta: 898}
+      {name: 'galar',id: '8',url: 'https://pokeapi.co/api/v2/pokemon/?offset=809&limit=89',desde: 810,hasta: 898},
+      {name: 'hisui',id: '9',url: 'https://pokeapi.co/api/v2/pokemon/?offset=898&limit=6',desde: 899,hasta: 905},
+      {name: 'paldea',id: '10',url: 'https://pokeapi.co/api/v2/pokemon/?offset=905&limit=102',desde: 906,hasta: 1008},
     ],
     offset:null,
     colorPorTipo:[
@@ -360,7 +366,7 @@ export default {
             .then((res)=>res.json())
             .then((res)=>{
               this.pokeInfo=res
-              console.log(this.pokeInfo)
+              // console.log(this.pokeInfo)
             })     
             .then(()=>setTimeout(() => {
             this.$store.state.load = false
@@ -442,9 +448,13 @@ export default {
       }
     },
 
-    performSearch(event) {
-      event.preventDefault(); // Evita la acción predeterminada de enviar el formulario
-      // Realiza la búsqueda aquí
+    async childValue(promise){
+      try {
+        const value = await promise;
+        this.pokeInfo = value;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
   computed: {
@@ -455,19 +465,6 @@ export default {
       }else{
         return false
       }       
-    },
-
-    filteredList() {
-      return this.list.filter(item => {
-        return (!this.region || item.region === this.region) && (!this.pokemon || item.name.toLowerCase().includes(this.pokemon.toLowerCase()));
-      });
-    },
-
-
-    filteredPokemon() {
-      return this.pokemonList.filter(pokemon => {
-        return (!this.region || pokemon.region === this.region) && (!this.pokemon || pokemon.name.toLowerCase().includes(this.pokemon.toLowerCase()));
-      });
     },
   },
   beforeMount(){

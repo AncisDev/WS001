@@ -17,7 +17,7 @@
                 <span class="position-absolute top-0 start-100 translate-middle badge z-index rounded-pill border border-light text-bg-warning py-4 fs-6">{{ badgeMsg }}</span>
                 <h5 class="card-title fw-bolder text-uppercase">{{ cardTitle }}</h5>
                 <p class="card-text ">{{ cardBody }}</p>
-                <div v-if="btnShow" v-on:click="fetchData()" class="btn btn-primary d-block">info...</div>
+                <div v-if="btnShow" v-on:click="emitValue(urlApi)" class="btn btn-primary d-block">info...</div>
             </div>
         </div> 
     </div>
@@ -33,15 +33,23 @@ export default{
         pokeInfo: String,
         badgeMsg: String,
         btnShow: Boolean,
-        btnMethod: Function,
+        urlApi: String,
     },
     data:()=>({
-        
+        infoPokemon: null,
     }),
     methods:{
-        fetchData(){
-            this.btnMethod()
-        }
+        async getPokeInfo(api){
+            const response = await fetch(api);
+            const results = await response.json();
+            // console.log(results)
+            return results;
+        },
+        async emitValue(api) {
+            const results = await this.getPokeInfo(api);
+            this.$emit('obj', results);
+        },
+
     },
     mounted(){
     
