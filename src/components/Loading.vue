@@ -32,7 +32,7 @@ export default{
     position: fixed;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,.9);
+    background-color: rgba(0,0,0,.98);
     transition: all ease-in-out;
 }
 

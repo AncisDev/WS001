@@ -22,12 +22,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Wiki.vue')
   },
   {
-    path: '/:id/digimon',
+    path: '/wiki/digimon',
     name: 'Digimon',
     component: () => import(/* webpackChunkName: "about" */ '../views/Digimon.vue')
   },
   {
-    path: '/:id/pokemon',
+    path: '/wiki/pokemon',
     name: 'Pokemon',
     component: () => import(/* webpackChunkName: "about" */ '../views/Pokemon.vue')
   },

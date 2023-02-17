@@ -1,18 +1,22 @@
 <template>
   <div class="digimon">
-    <div class="container-fluid bg-dark text-light fw-bolder">
+    <!-- <div class="container-fluid bg-dark text-light fw-bolder">
       <p class="h1 m-0 py-4">{{$route.name}}</p>
     </div>
 
-    <hr class=" border-success m-0 p-0">
+    <hr class=" border-success m-0 p-0"> -->
+
     
-    <div v-for="(nv,i) in nivel" :key="i" 
+    <div v-for="(nv,i) in nivel" :key="i"
     :id="'bank-card'+(i+1)"
-    class=""
+    style="max-width: 100%;"
+    class="pb-4"
     >
-      <span class="text-light py-3 bg-dark d-block fs-4">{{ nv }}</span>
-      <div class="p-0 w-100">
-        <DigiCards :digiNivel="nv"></DigiCards>
+      <div class="w-100 text-center p-5 fs-4 text-bg-dark">{{ nv }}</div>
+      <div class="container d-flex flex-wrap justify-content-center">
+        <DigiCards 
+        :digiNivel="nv"
+        ></DigiCards>
       </div>
     </div>
   </div>
@@ -48,9 +52,9 @@ export default {
     this.$store.state.load = true; 
   },
   mounted(){
-    setTimeout(() => {
-      this.$store.state.load = false; 
-    }, 600);
+    // setTimeout(() => {
+    //   this.$store.state.load = false; 
+    // }, 600);
   }
 }
 </script>

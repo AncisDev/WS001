@@ -97,7 +97,7 @@ export default{
             this.$store.state.load = true;
             
             // setTimeout(() => {
-                this.$router.push({name:ruta, params:{ id: this.$route.name}});
+                this.$router.push({name:ruta});
             // }, 600);
             // this.$store.state.load = false;
         },
