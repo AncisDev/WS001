@@ -72,8 +72,8 @@
           </button>
         </div>
         <!-- lista de elementos -->
-        <div  
-        class="overflow-y-auto h-75 border-top border-bottom border-warning"
+        <div style="height: 80%;"
+        class="overflow-y-auto border-top border-bottom border-warning"
         >
           <div v-for="item in lista" v-on:click="getPokeInfo(item.url), offset = item.desde,clearSearch()"
           class="m-0 p-0 w-100 text-uppercase"
@@ -180,7 +180,7 @@
             <PokeCards v-if="pk.name.includes(pokeSearch)" 
             :cardTitle="pk.name"
             :cardBody="''"
-            :badgeMsg="'N°'+(getRegion(pokeInfo,i))" 
+            :badgeMsg="'N°'+(offset+i)" 
             :cardImg="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+(offset+i)+'.png'"
             :btnShow="true"
             ></PokeCards>
@@ -188,7 +188,7 @@
             <PokeCards v-else-if="!pokeSearch" 
             :cardTitle="pk.name"
             :cardBody="''"
-            :badgeMsg="'N°'+(getRegion(pokeInfo,i))" 
+            :badgeMsg="'N°'+(offset+i)" 
             :cardImg="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+(offset+i)+'.png'"
             :btnShow="true"
             ></PokeCards>
@@ -204,7 +204,8 @@
       style="font-size: .8rem;"
       >
         <div class="row border-bottom border-dark bg-danger m-0 p-0">
-          <PokeCards class="col col-md-6 m-0 p-0"
+          <PokeCards 
+          class="col col-md-6 m-0 p-0"
           style="transform: scale(0.7);"
           :cardTitle="pokeInfo.name"
           :cardBody="''"
@@ -253,7 +254,7 @@
           </div>
         </div>
 
-        <hr class="border-light my-5">
+        <hr class="border-light my-4">
       </div>
     </div>
 
@@ -359,7 +360,7 @@ export default {
             .then((res)=>res.json())
             .then((res)=>{
               this.pokeInfo=res
-              // console.log(this.pokeInfo)
+              console.log(this.pokeInfo)
             })     
             .then(()=>setTimeout(() => {
             this.$store.state.load = false
@@ -423,9 +424,11 @@ export default {
         this.pokeSearch = '';
       }, 50);
     },
+
     adjustListPosition() {
       window.addEventListener('resize', this.handleResize);
     },
+
     handleResize() {
       const list = this.$refs.list;
       const keyboardHeight = window.innerHeight - document.body.clientHeight;
@@ -438,6 +441,7 @@ export default {
         list.style.transform = '';
       }
     },
+
     performSearch(event) {
       event.preventDefault(); // Evita la acción predeterminada de enviar el formulario
       // Realiza la búsqueda aquí
