@@ -51,14 +51,13 @@
           </button>
           
           <!-- barra de busqueda -->
-          <form class="d-flex" role="search">
+          <form class="d-flex"  @submit.prevent="pokeFound = pokeSearch">
             <input class="form-control mx-2 py-0 bg-dark text-light text-uppercase" 
             type="search" 
             placeholder="Buscar..." aria-label="Search" v-model="pokeSearch"
             style="font-size: .7rem;"
             >
             <button type="button"
-            @click="pokeFound = pokeSearch, clearSearch()"
             style="font-size: .7rem;"
             class="btn btn-sm btn-outline-warning border-0 rounded-circle py-1 px-2" >
               <i class="fa fa-search" aria-hidden="true"></i>
@@ -111,7 +110,10 @@
           </button>
 
           <!-- menu flotante movil -->
-          <ul class="dropdown-menu d-black bg-danger w-100 overflow-y-auto py-2" style="max-width: 400px;max-height: 400px;font-size: .8rem;">
+          <ul ref="list"
+          class="dropdown-menu d-black bg-danger w-100 overflow-y-auto py-2" 
+          style="max-width: 400px;max-height: 400px;font-size: .8rem;"
+          >
             <!-- botones de paginacion en menu flotante -->
             <div v-if="urlApi = this.$store.state.pokeApi+'pokedex'"
             class="w-100 px-3 py-2 bg-danger fixed-bottom position-relative d-flex justify-content-between align-items-center"
@@ -124,17 +126,18 @@
               </button>
               
               <!-- barra de busqueda -->
-              <form class="d-flex" role="search">
+              <form class="d-flex" role="search" @submit.prevent="performSearch">
                 <input class="form-control mx-2 py-0 bg-secondary-subtle text-primary text-uppercase" 
-                type="search" @blur="clearSearch" 
+                type="search" @click="adjustListPosition()"
                 placeholder="Buscar..." aria-label="Search" v-model="pokeSearch"
                 style="font-size: .7rem;"
                 >
-                <button type="button"
+                <div
+                @click="pokeFound = pokeSearch"
                 style="font-size: .7rem;"
                 class="btn btn-sm btn-outline-primary border-0 rounded-circle py-1 px-2" >
                   <i class="fa fa-search text-warning" aria-hidden="true"></i>
-                </button>
+                </div>
               </form>
 
               <!-- botones de paginacion next -->
@@ -167,13 +170,14 @@
 <!-- vista de tarjetas -->
       <!-- vista album -->
       <div v-if="pokeInfo.results"
-      style="max-height: 80%;" 
+      style="max-height: 90%;" 
       class="col w-100 m-0 px-0 py-4 h-100 overflow-auto"
       >
         <div class="row m-0 mb-4 p-0 ">
-          <div v-for="(pk,i) in pokeInfo.results" :key="i">
-            <PokeCards v-if="pk.name.includes(pokeFound)" 
-            class="col my-4" 
+          <div v-for="(pk,i) in pokeInfo.results" :key="i"
+          class="col my-4" 
+          >
+            <PokeCards v-if="pk.name.includes(pokeSearch)" 
             :cardTitle="pk.name"
             :cardBody="''"
             :badgeMsg="'N°'+(getRegion(pokeInfo,i))" 
@@ -181,8 +185,7 @@
             :btnShow="true"
             ></PokeCards>
 
-            <PokeCards v-else-if="!pokeFound"
-            class="col my-4" 
+            <PokeCards v-else-if="!pokeSearch" 
             :cardTitle="pk.name"
             :cardBody="''"
             :badgeMsg="'N°'+(getRegion(pokeInfo,i))" 
@@ -419,6 +422,25 @@ export default {
       setTimeout(() => {
         this.pokeSearch = '';
       }, 50);
+    },
+    adjustListPosition() {
+      window.addEventListener('resize', this.handleResize);
+    },
+    handleResize() {
+      const list = this.$refs.list;
+      const keyboardHeight = window.innerHeight - document.body.clientHeight;
+      const listRect = list.getBoundingClientRect();
+      const listBottom = listRect.top + listRect.height;
+      if (listBottom > window.innerHeight - keyboardHeight) {
+        const diff = listBottom - (window.innerHeight - keyboardHeight);
+        list.style.transform = `translateY(-${(diff-300)}px)`;
+      } else {
+        list.style.transform = '';
+      }
+    },
+    performSearch(event) {
+      event.preventDefault(); // Evita la acción predeterminada de enviar el formulario
+      // Realiza la búsqueda aquí
     },
   },
   computed: {
