@@ -117,7 +117,7 @@ hr{
 }
 form{
     width: 600px;
-    max-width: 80%;
+    max-width: 80vw;
 }
 h4{
     color: #20c997;
