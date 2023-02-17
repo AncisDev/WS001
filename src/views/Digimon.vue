@@ -10,10 +10,10 @@
     <div v-for="(nv,i) in nivel" :key="i"
     :id="'bank-card'+(i+1)"
     style="max-width: 100%;"
-    class="pb-4"
+    class=""
     >
       <div class="w-100 text-center p-5 fs-4 text-bg-dark">{{ nv }}</div>
-      <div class="container d-flex flex-wrap justify-content-center">
+      <div class="container d-flex flex-wrap justify-content-center py-5">
         <DigiCards 
         :digiNivel="nv"
         ></DigiCards>
