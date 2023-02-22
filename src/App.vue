@@ -1,7 +1,4 @@
 <template>
-  <Loading v-if="$store.state.load" 
-  :titulo="tituloWeb"
-  ></Loading>
   <div>
     <Header></Header>
     <router-view :titulo="tituloWeb"/>
@@ -12,48 +9,19 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import Header from '@/components/Header.vue'
-// import { onMounted } from 'vue';
-// import { auth } from "./utils/firebase.js";
-
-
 import Loading from '@/components/Loading.vue'
-
-    
 
 
 export default {
   name: 'App',
-  setup(){
-    // onMounted(()=>{
-    //   auth.onAuthStateChanged((user)=>{
-    //     if(user) {
-    //       console.log("usuario logueado")
-    //     }else{
-    //       console.log("usuario no logueado")
-    //     }
-    //   })
-    // })
-  },
   components: {
     Header,
-    Loading
+    Loading,
   },
-  data:()=>({
+  data: () => ({
     tituloWeb: process.env.VUE_APP_TITTLE,
-    loading: true,
   }),
-  methods:{
-    // loadOff(){
-    //   this.$store.state.load = false;
-    // }
-  },
-  async mounted(){
-    // await setTimeout(() => {
-    //   this.$store.state.load = false;
-    // }, 300);
-  }
 }
 </script>
 

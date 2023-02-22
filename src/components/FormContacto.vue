@@ -82,24 +82,39 @@ export default{
             correo: '',
             asunto: '',
             mensaje: '',
-        }
+        },
+        successMessage: '',
+        errorMessage: '',
     }),
     methods:{
         submitForm() {
             const formData = new FormData();
-            formData.append('name', this.dataContacto.nombre+' '+this.dataContacto.apellido);
+            formData.append('name', this.dataContacto.nombre)
+            formData.append('lname', this.dataContacto.apellido);
             formData.append('email', this.dataContacto.correo);
+            formData.append('asunto', this.dataContacto.lasunto);
             formData.append('message', this.dataContacto.message);
 
-            fetch('send_email.php', {
+            fetch('http://localhost/send_email.php', {
                 method: 'POST',
-                body: formData
+                mode:"cors",
+                headers: {
+                    'Content-Type': 'text/php'
+                },
+                body: formData,
             })
             .then(response => {
                 console.log(response);
+                this.nombre = "";
+                this.apellido = "";
+                this.correo = "";
+                this.asunto = "";
+                this.mensaje = "";
+                this.successMessage = "Tu mensaje ha sido enviado con éxito.";
             })
             .catch(error => {
-                console.error(error);
+                console.log(error);
+                this.errorMessage = "Ha ocurrido un error al enviar tu mensaje.";
             });
         }
     },

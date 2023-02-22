@@ -12,29 +12,11 @@
             </router-link>
         </div>
 
-        <div ref="titleView" class="text-center text-warning fs-5 w-100">{{$route.name}}</div>
+        <!-- Nombre vista -->
+        <div ref="titleView" class="text-center text-warning fw-bold text-uppercase fs-5 w-100">{{$route.name}}</div>
 
-        <div class="btn-group d-md-none w-50 ms-5 me-4">
-            <button type="button" 
-            class="btn btn-outline-success dropdown-toggle" 
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            ></button>
-            <ul class="dropdown-menu text-light bg-dark mt-2">
-                <li v-for="r in rutas">
-                    <a class="dropdown-item" 
-                    v-on:click="insertarRuta(r.ruta)" 
-                    href="#"
-                    >
-                        {{ r.nombre }}
-                    </a>
-                    <hr class="dropdown-divider m-0 p-0"/>
-                </li>
-            </ul>
-        </div>
-        
         <nav  
-        class="w-100 mw-md-25 m-0 me-3 d-none d-md-flex justify-content-end align-items-center"
+        class="w-100 mw-md-25 m-0 d-none d-md-flex justify-content-end align-items-center"
         >
             <div v-for="r in rutas">
                 <button v-if="r.subRuta"
@@ -62,13 +44,40 @@
                 </ul>
             </div>
         </nav>
+        
+        <loginModal></loginModal>
+
+        <!-- Menu flotante -->
+        <div class="btn-group d-md-none w-50 mx-3">
+            <!-- boton menu flotante -->
+            <button type="button" 
+            class="btn btn-outline-success dropdown-toggle" 
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            ></button>
+            <ul class="dropdown-menu text-light bg-dark mt-3 border border-success">
+                <li v-for="r in rutas">
+                    <a class="dropdown-item" 
+                    v-on:click="insertarRuta(r.ruta)" 
+                    href="#"
+                    >
+                        {{ r.nombre }}
+                    </a>
+                    <hr class="dropdown-divider m-0 p-0"/>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
 <script>
+import LoginModal from '../components/LoginModal.vue'
 
 export default{
     name: 'Header',
+    components:{
+        LoginModal
+    },
     props:{
     },
     data:()=>({
