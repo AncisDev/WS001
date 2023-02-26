@@ -78,7 +78,7 @@
                {{errorMessage }}
             </span>
 
-            <div class="alert alert-info p-3 rounded" style="min-width: 100px;min-height: 100px; box-shadow: 3px 3px 3px 0 rgba(255, 255, 255, .3); font-size: .7rem;">
+            <div class="d-none alert alert-info p-3 rounded" style="min-width: 100px;min-height: 100px; box-shadow: 3px 3px 3px 0 rgba(255, 255, 255, .3); font-size: .7rem;">
                 <p>Nombre  : {{ dataContacto.nombre }}</p>
                 <p>Apellido: {{ dataContacto.apellido }}</p>
                 <p>Correo  : {{ dataContacto.correo }}</p>
