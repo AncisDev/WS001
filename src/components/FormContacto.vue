@@ -122,8 +122,14 @@ export default{
                 // console.log(usrMessage)
                 return await addDoc(collectionRef, usrMessage)
                 .then((docRef)=>{
+                    for (let item in this.dataContacto) {
+                        this.dataContacto[item] = '';
+                    };
                     console.log("Mensaje enviado con ID: ", docRef.id);
                 }).catch((error)=>{
+                    for (let item in this.dataContacto) {
+                        this.dataContacto[item] = '';
+                    };
                     this.errorMessage = "No se pudo enviar su mensaje, por favor intente mas tarde.";
                     console.log("No se pudo enviar mensaje: ", error);
                 })
