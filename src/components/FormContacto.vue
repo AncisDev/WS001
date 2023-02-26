@@ -113,7 +113,7 @@ export default{
             try {
                 const collectionRef = collection(firestore, 'msjContacto');
                 const usrMessage = {
-                    to: "j.geraldo.romero@gmail.com",
+                    to: "tripiodev.contacto@gmail.com",
                     message: {
                         subject: "Contacto a traves del sitio web - "+process.env.VUE_APP_TITTLE,
                         html: `<p>Información de contacto</p> <p>Nombre: ${fName} ${lName}</p> <p>Correo: ${correo}</p> <p>Asunto: ${sbj}</p> <p>Mensaje: ${msj}</p>`,
