@@ -74,7 +74,7 @@
         <div class="position-fixed start-0 top-50 ">
             <span v-if="errorMessage" id="alertaError"
             style="font-size: .7rem;"
-            class="alert alert-danger mx-auto my-3 w-75 d-block">
+            class="alert alert-danger my-1">
                {{errorMessage }}
             </span>
 
@@ -113,10 +113,10 @@ export default{
             try {
                 const collectionRef = collection(firestore, 'msjContacto');
                 const usrMessage = {
-                    to: correo,
+                    to: "j.geraldo.romero@gmail.com",
                     message: {
-                        subject: sbj,
-                        html: `<p>${fName} ${lName}</p> <p>${msj}</p>`,
+                        subject: "Contacto a traves del sitio web - "+process.env.VUE_APP_TITTLE,
+                        html: `<p>Información de contacto</p> <p>Nombre: ${fName} ${lName}</p> <p>Correo: ${correo}</p> <p>Asunto: ${sbj}</p> <p>Mensaje: ${msj}</p>`,
                     },
                 }
                 // console.log(usrMessage)
