@@ -1,6 +1,6 @@
 <template>
     <div class="row bg-dark text-light border-bottom border-success d-flex justify-content-between align-items-center sticky-top border-bottom m-0 p-0">
-        <div class="col-5 col-md-2 p-0 m-0 text-start fs-1 ">
+        <div class="col-5 col-md-3 p-0 m-0 text-start fs-1 ">
             <router-link :to="{name: 'Inicio'}"
             class="btn btn-outline-success btn-lg border-0 rounded-0 w-100 m-0 p-0 fs-2 text-start d-block"
             >
@@ -14,16 +14,14 @@
 
         <!-- Nombre vista -->
         <div ref="titleView" 
-        class="col-4 text-center text-warning fw-bold text-uppercase"
+        class="col-4 col-md-3 text-center text-warning fw-bold text-uppercase"
         style="font-size: .8rem;"
         >{{$route.name}}</div>
 
-        <nav  
-        class="col-5 m-0 d-none d-md-flex justify-content-end align-items-center"
-        >
+        <nav class="col-5 m-0 d-none d-md-flex justify-content-end align-items-center">
             <div v-for="r in rutas">
                 <button v-if="r.subRuta"
-                class="btn btn-sm btn-outline-success border-0 rounded-pill mx-1 py-1 px-2 dropdown-toggle mx-1 p-1" 
+                class="btn btn-sm btn-outline-success border-0 rounded-pill mx-1 py-1 px-2 dropdown-toggle p-1" 
                 type="button" 
                 data-bs-toggle="dropdown" 
                 aria-expanded="false">
