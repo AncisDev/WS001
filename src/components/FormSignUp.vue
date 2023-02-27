@@ -102,6 +102,10 @@
             <p class="my-1">* No se puede registrar 2 o más cuentas de usuario con el mismo correo electrónico.</p>
             <p class="my-1">* La contraseña debe tener minimo 6 caracteres. <i class="fw-bold">{Se recomienda utilizar letras mayusculas, minusculas, numeros y al menos un caracter especial}</i></p>
         </div>
+
+        <!-- Espaciador para que se mantenga sobre el footer -->
+        <br>
+        <hr class="border-light">
     </div>
 </template>
 
