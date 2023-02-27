@@ -95,8 +95,9 @@ export default {
   },
   mounted(){
     setTimeout(() => {
-      this.$store.state.load = false;
-    }, 300);
+      this.$store.state.load = false;        
+    }, 600);
+
   }
 }
 </script>

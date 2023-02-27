@@ -86,6 +86,17 @@ export default{
                         this.$store.state.load = false;
                     }, 3000);
                 })
+                .then(()=>{
+                    auth.onAuthStateChanged((user) => {
+                    if (user) {
+                        // El usuario ha iniciado sesión correctamente
+                        this.$store.state.user = user;
+                    } else {
+                        // El usuario no ha iniciado sesión
+                        this.$store.state.user = null;
+                    }
+                    });
+                })
             } catch (error) {
                 console.error(error);
             }
