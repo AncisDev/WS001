@@ -43,7 +43,7 @@
                 <div id="itemHover" class="col px-4 py-3">
                     <label 
                     class="form-label ps-3 pb-2"
-                    >Nombre de usuario</label>
+                    >Usuario</label>
                     
                     <input type="text"  v-model="userData.username"
                     class="form-control px-3 py-2"
