@@ -85,10 +85,6 @@ export default {
     ]
   }),
   methods:{
-    loadOff(){
-      this.$store.state.load = false;
-    },
-
     insertarRuta(ruta){
       this.$store.state.load = true;
       this.$router.push({name:ruta, params:{ id: this.$route.name}});
@@ -97,9 +93,9 @@ export default {
       }, 600);
     },
   },
-  async mounted(){
-    await setTimeout(() => {
-      this.loadOff()
+  mounted(){
+    setTimeout(() => {
+      this.$store.state.load = false;
     }, 300);
   }
 }

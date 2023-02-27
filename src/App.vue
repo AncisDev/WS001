@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Loading v-if="this.$store.state.load"></Loading>
     <Header></Header>
     <router-view :titulo="tituloWeb"/>
     <footer class="position-fixed bottom-0 text-bg-dark text-center w-100 py-1 m-0">
@@ -22,6 +23,9 @@ export default {
   data: () => ({
     tituloWeb: process.env.VUE_APP_TITTLE,
   }),
+  mounted(){
+
+  }
 }
 </script>
 

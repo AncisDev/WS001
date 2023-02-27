@@ -48,16 +48,16 @@
         <loginModal></loginModal>
 
         <!-- Menu flotante -->
-        <div class="btn-group d-md-none w-50 mx-3">
+        <div class="btn-group d-md-none w-25 mx-3">
             <!-- boton menu flotante -->
             <button type="button" 
             class="btn btn-outline-success dropdown-toggle" 
             data-bs-toggle="dropdown"
             aria-expanded="false"
             ></button>
-            <ul class="dropdown-menu text-light bg-dark mt-3 border border-success">
+            <ul class="dropdown-menu mt-3 border border-success bg-dark">
                 <li v-for="r in rutas">
-                    <a class="dropdown-item" 
+                    <a class="btn btn-outline-success d-block rounded-0 border-0" 
                     v-on:click="insertarRuta(r.ruta)" 
                     href="#"
                     >
