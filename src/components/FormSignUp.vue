@@ -102,8 +102,12 @@
 
         <hr class="border-light">
 
-        <div class="container">
-            <p></p>
+        <div class="container" style="font-size: .6rem;">
+            <p class="my-1 fw-bold" style="font-size: .8rem;">Completa el formulario para poder crear tu cuenta de usuario para nuestro sitio web.</p>
+            <p class="my-1 fst-italic">Antes de registrarte tener en consideración lo siguiente:</p>
+            <p class="my-1">* La cuenta que vas a crear es unicamente para navegar en nuestro sitio y acceder a las vistas disponibles para los usuarios registrados.</p>
+            <p class="my-1">* No se puede registrar 2 o más cuentas de usuario con el mismo correo electrónico.</p>
+            <p class="my-1">* La contraseña debe tener minimo 6 caracteres. <i class="fw-bold">{Se recomienda utilizar letras mayusculas, minusculas, numeros y al menos un caracter especial}</i></p>
         </div>
     </div>
 </template>
