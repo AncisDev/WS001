@@ -10,9 +10,9 @@ export default{
   props:{
 
   },
-  data(){
+  data:()=>({
 
-  },
+  }),
   beforeMount(){
     this.$store.state.load = true; 
   },

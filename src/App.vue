@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Loading v-show="this.$store.state.load"></Loading>
+    <Loading v-show="this.$store.state.load" :titulo="tituloWeb"></Loading>
     <Header></Header>
     <router-view :titulo="tituloWeb"/>
     <footer class="position-fixed bottom-0 text-bg-dark text-center w-100 py-1 m-0">

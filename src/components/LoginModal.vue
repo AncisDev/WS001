@@ -2,7 +2,7 @@
     <div class="loginModal">
         <div class="dropdown ms-2 me-md-3">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-success" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" class="btn btn-success rounded-circle" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </button>
 
@@ -45,8 +45,10 @@
                 <div v-else class="">
                     <div class="text-end">
                         <button @click="logout"
-                        class="btn btn-sm btn-dark rounded-circle border-0 m-0 px-2 py-1"
-                        >X</button>
+                        class="btn btn-sm btn-outline-danger border-0 rounded-circle border-0 m-0 px-2 py-1"
+                        >
+                            <i class="fa fa-power-off" aria-hidden="true"></i>
+                        </button>
                     </div>
 
                     <div class="text-warning text-center">
@@ -81,7 +83,7 @@ export default{
                 })
                 .then(()=>{
                     setTimeout(() => {
-                        this.$router.push("/");
+                        this.$router.push("/panel");
                         console.log("Sesion iniciada correctamente");
                         this.$store.state.load = false;
                     }, 3000);

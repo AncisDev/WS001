@@ -1,6 +1,6 @@
 <template>
-    <div class="w-100 bg-dark text-light border-bottom border-success d-flex justify-content-between align-items-center sticky-top border-bottom m-0 p-0">
-        <div class="w-100 w-md-25 px-1 p-0 m-0 text-start fs-1 ">
+    <div class="row bg-dark text-light border-bottom border-success d-flex justify-content-between align-items-center sticky-top border-bottom m-0 p-0">
+        <div class="col-5 col-md-2 p-0 m-0 text-start fs-1 ">
             <router-link :to="{name: 'Inicio'}"
             class="btn btn-outline-success btn-lg border-0 rounded-0 w-100 m-0 p-0 fs-2 text-start d-block"
             >
@@ -13,14 +13,17 @@
         </div>
 
         <!-- Nombre vista -->
-        <div ref="titleView" class="text-center text-warning fw-bold text-uppercase fs-5 w-100">{{$route.name}}</div>
+        <div ref="titleView" 
+        class="col-4 text-center text-warning fw-bold text-uppercase"
+        style="font-size: .8rem;"
+        >{{$route.name}}</div>
 
         <nav  
-        class="w-100 mw-md-25 m-0 d-none d-md-flex justify-content-end align-items-center"
+        class="col-5 m-0 d-none d-md-flex justify-content-end align-items-center"
         >
             <div v-for="r in rutas">
                 <button v-if="r.subRuta"
-                class="btn btn-sm btn-outline-success border-0 rounded-pill mx-1 py-2 px-3 dropdown-toggle mx-1 p-1" 
+                class="btn btn-sm btn-outline-success border-0 rounded-pill mx-1 py-1 px-2 dropdown-toggle mx-1 p-1" 
                 type="button" 
                 data-bs-toggle="dropdown" 
                 aria-expanded="false">
@@ -28,7 +31,7 @@
                 </button>
 
                 <button v-else v-on:click="insertarRuta(r.ruta)"
-                class="btn btn-sm btn-outline-success border-0 rounded-pill mx-1 py-2 px-3"
+                class="btn btn-sm btn-outline-success border-0 rounded-pill mx-1 py-1 px-2"
                 >
                     {{r.nombre}}
                 </button>
@@ -45,27 +48,34 @@
             </div>
         </nav>
         
-        <loginModal></loginModal>
+        <div class="col-3 col-md-1 d-flex justify-content-end">
+            <!-- boton y form login -->
+            <loginModal></loginModal>
 
-        <!-- Menu flotante -->
-        <div class="btn-group d-md-none w-25 mx-3">
-            <!-- boton menu flotante -->
-            <button type="button" 
-            class="btn btn-outline-success dropdown-toggle" 
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            ></button>
-            <ul class="dropdown-menu mt-3 border border-success bg-dark">
-                <li v-for="r in rutas">
-                    <a class="btn btn-outline-success d-block rounded-0 border-0" 
-                    v-on:click="insertarRuta(r.ruta)" 
-                    href="#"
-                    >
-                        {{ r.nombre }}
-                    </a>
-                    <hr class="dropdown-divider m-0 p-0"/>
-                </li>
-            </ul>
+            <!-- Menu flotante -->
+            <div class="btn-group d-md-none ms-2 me-1">
+                <!-- boton menu flotante -->
+                <button type="button"
+                class="btn btn-outline-success dropdown rounded" 
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >   
+                    <div id="iconBtnMenu">
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </div>
+                </button>
+                <ul class="dropdown-menu mt-3 border border-success bg-dark">
+                    <li v-for="r in rutas">
+                        <a class="btn btn-outline-success d-block rounded-0 border-0" 
+                        v-on:click="insertarRuta(r.ruta)" 
+                        href="#"
+                        >
+                            {{ r.nombre }}
+                        </a>
+                        <hr class="dropdown-divider m-0 p-0"/>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -126,5 +136,9 @@ export default{
 nav a:active {
   color: #42b983;
   font-weight: bold;
+}
+button:focus > #iconBtnMenu{
+    transform: rotate(180deg);
+    transition: all 300ms ease-in-out;
 }
 </style>

@@ -17,7 +17,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Productos.vue')
   },
   {
-    path: '/wiki',
+    path: '/anime',
     name: 'Wiki',
     component: () => import(/* webpackChunkName: "about" */ '../views/Wiki.vue')
   },
@@ -31,16 +31,27 @@ const routes = [
     name: 'Pokemon',
     component: () => import(/* webpackChunkName: "about" */ '../views/Pokemon.vue')
   },
+  // {
+  //   // vista por crear e implementar
+  //   path: '/chat',
+  //   name: 'Chat',
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/x.vue')
+  // },
   {
     // vista por crear e implementar
-    path: '/chat',
-    name: 'Chat',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Chat.vue')
+    path: '/panel',
+    name: 'Panel',
+    component: () => import(/* webpackChunkName: "about" */ '../views/UserPanel.vue')
   },
   {
     path: '/contacto',
     name: 'Contacto',
     component: () => import(/* webpackChunkName: "about" */ '../views/Contacto.vue')
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: '404 !',
+    component: () => import(/* webpackChunkName: "about" */ '../views/404.vue')
   }
 ]
 
