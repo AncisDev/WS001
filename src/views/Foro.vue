@@ -1,5 +1,5 @@
 <template>
-    <div class="chat">
+    <div class="foro">
 
     </div>
   </template>

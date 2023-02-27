@@ -7,7 +7,6 @@
 <script>
 import FormContacto from '@/components/FormContacto.vue';
 
-
 export default{
   name:'Contacto',
   components:{

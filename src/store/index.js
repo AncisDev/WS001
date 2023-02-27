@@ -28,6 +28,15 @@ export default createStore({
         console.log("No se pudo iniciar sesion: "+error);
       }
     },
+
+    signup({ commit }, { email, password }) {
+      return auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          commit('setUser', user);
+          return user;
+        });
+    },
   },
   modules: {
   }

@@ -35,8 +35,26 @@
                         aria-label="Contraseña" 
                         aria-describedby="basic-addon1">
                     </div>
+
                     <hr class="border-success border-2 p-0">
+
                     <button type="submit" class="btn btn-sm btn-warning w-100 rounded-pill">Entrar</button>
+                    <div id="enlaces" class="row m-0 mt-3 p-0">
+                        <div class="col">
+                            <router-link id="enlace" 
+                            :to="{name: 'SignUp'}"
+                            class="nav-link"
+                            style="font-size: .7rem;"
+                            >Registrarse</router-link>
+                        </div>
+                        <div class="col">
+                            <router-link id="enlace" 
+                            :to="{}"
+                            class="nav-link disabled"
+                            style="font-size: .7rem;"
+                            >Olvide Contraseña</router-link>
+                        </div>
+                    </div>
                     <span v-if="this.$store.state.msgError" class="alert alert-danger d-block text-center mx-0 mt-3 mb-0" style="font-size: .7rem;">
                         {{ this.$store.state.msgError }}
                     </span>
@@ -54,6 +72,27 @@
                     <div class="text-warning text-center">
                         <p>¡Bienvenido!</p>
                         <span class="badge bg-success-subtle rounded-pill text-success fw-light px-3 py-2">{{ this.$store.state.user.email }}</span>
+                    </div>
+
+                    <div id="enlaces" class="container">
+                        <hr class="border-warning">
+                        <router-link id="enlace" 
+                        :to="{name: 'Chat'}"
+                        class="nav-link"
+                        style="font-size: .7rem;"
+                        >Chat room</router-link>
+
+                        <router-link id="enlace" 
+                        :to="{name: 'Foro'}"
+                        class="nav-link disabled"
+                        style="font-size: .7rem;"
+                        >Posts Wall</router-link>
+
+                        <router-link id="enlace" 
+                        :to="{name: 'Panel'}"
+                        class="nav-link"
+                        style="font-size: .7rem;"
+                        >Mi cuenta</router-link>
                     </div>
                 </div>
             </div>
@@ -126,3 +165,17 @@ export default{
     }
 }
 </script>
+
+<style scoped>
+#enlaces{
+    color: white;    
+}
+    #enlace:hover{
+        transform: scale(1.02);
+        transition:  all .3s ease-in-out;
+        color: #ffc107;
+    }
+#enlaces > .disabled, #enlaces > div.col > .disabled{
+    color: gray;
+}
+</style>

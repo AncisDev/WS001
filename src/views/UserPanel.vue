@@ -34,7 +34,8 @@
         <div class="row m-0">
             <router-link
             class="btn btn-outline-dark border-0 d-block w-50 mx-auto" 
-            :to="{name: 'Inicio'}"
+            :to="{name: 'Inicio'}" 
+            @click="this.$store.state.load = true, logout"
             >Salir</router-link>
         </div>
     </div>
@@ -44,7 +45,8 @@
             ¡Upss! Ha ocurrido un error.
         </h3>
         <h5>Actualizar sitio.</h5>
-        <router-link :to="{name: 'Inicio'}" @click="this.$store.state.load = true"
+        <router-link :to="{name: 'Inicio'}" 
+        @click="this.$store.state.load = true"
         class="btn btn-sm btn-outline-danger rounded-circle"
         >
             <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -53,7 +55,7 @@
 </template>
 
 <script>
-
+import { auth } from "../utils/firebase";
 
 export default{
     name: 'UserPanel',
@@ -61,7 +63,25 @@ export default{
 
     },
     methods:{
-        
+        async logout() {
+            this.$store.state.load = true;
+            await auth
+            .signOut()
+            .then(() => {
+                setTimeout(() => {
+                    this.$store.state.user = null;
+                    this.user = '';
+                    this.pass = '';
+                    this.$router.push("/");
+                    console.log("Sesion finalizada correctamente");
+                    this.$store.state.load = false;
+                }, 1000);
+            })
+            .catch((error) => {
+                // Ha ocurrido un error al cerrar sesión
+                console.log(error);
+            });
+        },
     },
 }
 </script>

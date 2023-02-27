@@ -19,6 +19,16 @@
     "public": "dist",
     "ignore": [
 
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/404",
+        "destination": "/Inicio"
+      }
     ]
-  }
+  }  
 }

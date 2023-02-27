@@ -221,7 +221,7 @@ h4{
     }
 input{
     color: #20c997;
-    box-shadow: 3px 3px 3px 0 rgba(255, 255, 255, .2);
+    box-shadow: 3px 3px 10px 1px rgba(255, 255, 255, .2);
     font-size: .75rem;
 }
 textarea{
@@ -230,7 +230,7 @@ textarea{
     max-height: 200px;
     /* pointer-events: none; */
     resize: none;
-    box-shadow: 3px 3px 3px 0 rgba(255, 255, 255, .2);
+    box-shadow: 3px 3px 10px 1px rgba(255, 255, 255, .2);
     font-size: .75rem;
 }
 button{

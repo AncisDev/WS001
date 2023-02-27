@@ -31,14 +31,22 @@ const routes = [
     name: 'Pokemon',
     component: () => import(/* webpackChunkName: "about" */ '../views/Pokemon.vue')
   },
-  // {
-  //   // vista por crear e implementar
-  //   path: '/chat',
-  //   name: 'Chat',
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/x.vue')
-  // },
   {
-    // vista por crear e implementar
+    path: '/signup',
+    name: 'SignUp',
+    component: () => import(/* webpackChunkName: "about" */ '../views/SignUp.vue')
+  },
+  {
+    path: '/chat',
+    name: 'Chat',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Chat.vue')
+  },
+  {
+    path: '/foro',
+    name: 'Foro',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Foro.vue')
+  },
+  {
     path: '/panel',
     name: 'Panel',
     component: () => import(/* webpackChunkName: "about" */ '../views/UserPanel.vue')
@@ -50,8 +58,8 @@ const routes = [
   },
   {
     path: '/:catchAll(.*)',
-    name: '404 !',
-    component: () => import(/* webpackChunkName: "about" */ '../views/404.vue')
+    name: 'Not Found',
+    component: () => import(/* webpackChunkName: "about" */ '../views/NotFound.vue')
   }
 ]
 
