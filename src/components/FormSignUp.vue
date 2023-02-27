@@ -90,13 +90,6 @@
                 <button class="btn btn-sm btn-outline-warning rounded-pill">
                     Registrarse
                 </button>
-
-                <div v-show="errorMsg" 
-                style="font-size: .7rem;"
-                class="alert alert-danger"
-                >
-                    {{ errorMsg }}
-                </div>
             </div>
         </form>
 
@@ -129,9 +122,10 @@ export default{
             correo:'',
             username:'',
             contraseña:'',
-            errorMsg: '',
-            successMsg: '',
-        }
+            
+        },
+        errorMsg: '',
+        successMsg: '',
     }),
     methods:{
         async signUp() {
@@ -187,7 +181,7 @@ input{
         background-color: rgba(12, 83, 30, 0.664);
     }
 #itemHover:hover{
-    background-color: rgba(209, 193, 46, 0.842);
+    background-color: rgba(252, 228, 19, 0.842);
     border-radius: 10px;
     color: black;
     transition: all .1s ease-in-out;
