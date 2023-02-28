@@ -92,7 +92,7 @@ export default{
         rutas:[
             {nombre: 'Inicio', ruta:'/', titulo: 'Pagina principal'},
             {nombre: 'Nosotros', ruta:'/nosotros', titulo: 'about'},
-            {nombre: 'Wiki', ruta:'/wiki', titulo: '', 
+            {nombre: 'Wiki', ruta:'/anime', titulo: '', 
                 subRuta:[
                     {nombre:'Digimon', ruta:'/digimon', titulo: 'Digi Wiki'},
                     {nombre:'Pokemon', ruta:'/Pokemon', titulo: 'Poke Wiki'},

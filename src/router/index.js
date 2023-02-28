@@ -37,6 +37,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/SignUp.vue')
   },
   {
+    path: '/reset-password',
+    name: 'Contraseña',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ResetPass.vue')
+  },
+  {
     path: '/chat',
     name: 'Chat',
     component: () => import(/* webpackChunkName: "about" */ '../views/Chat.vue')

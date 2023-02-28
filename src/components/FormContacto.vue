@@ -1,7 +1,7 @@
 <template>
     <div class="formContacto">
         <form @submit.prevent="sendEmail(dataContacto.correo,dataContacto.nombre,dataContacto.apellido,dataContacto.asunto,dataContacto.mensaje)"
-        class="m-5 px-0 py-4 text-bg-dark rounded"
+        class="m-4 px-0 py-4 text-bg-dark rounded"
         >
             <header class="text-center">
                 <h4 class="py-2">Dejanos tu mensaje</h4>

@@ -49,8 +49,8 @@
                         </div>
                         <div class="col">
                             <router-link id="enlace" 
-                            :to="{}"
-                            class="nav-link disabled"
+                            :to="{ name:'Contraseña' }"
+                            class="nav-link"
                             style="font-size: .7rem;"
                             >Olvide Contraseña</router-link>
                         </div>
